@@ -1,22 +1,40 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>Flutter of the Year - Best Flutter Apps Collection</title>
+    <meta name="title" content="Flutter of the Year - Best Flutter Apps Collection" />
+    <meta name="description" content="Discover the best Flutter applications of the year. A showcase celebrating innovation and excellence in Flutter development." />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content="Flutter of the Year - Best Flutter Apps Collection" />
+    <meta property="og:description" content="Discover the best Flutter applications of the year. A showcase celebrating innovation and excellence in Flutter development." />
+    <meta property="og:image" content={`${Astro.url}thumbnail.png`} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content="Flutter of the Year - Best Flutter Apps Collection" />
+    <meta property="twitter:description" content="Discover the best Flutter applications of the year. A showcase celebrating innovation and excellence in Flutter development." />
+    <meta property="twitter:image" content={`${Astro.url}thumbnail.png`} />
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>

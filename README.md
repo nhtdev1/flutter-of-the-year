@@ -1,48 +1,43 @@
-# Astro Starter Kit: Basics
+# Flutter Of The Year 🏆
 
-```sh
-npm create astro@latest -- --template basics
-```
+A curated showcase of the most innovative Flutter applications of the year. This community-driven collection celebrates creativity, technical excellence, and the vibrant Flutter ecosystem.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+[![Sponsored by Hungrimind.com](https://img.shields.io/badge/Sponsored%20by-Hungrimind.com-blue)](https://hungrimind.com)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+> 🎓 **Sponsored by [Hungrimind.com](https://hungrimind.com)** - The Best Flutter Course on the Internet
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## About
 
-## 🚀 Project Structure
+Flutter of the Year is an annual celebration of outstanding Flutter applications. Each year's collection is preserved as a time capsule of Flutter innovation, with submissions locked at year's end.
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🚀 How to Submit Your Application
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+1. **Fork** this repository
+2. **Create** your application entry:
+   - Add your entry file to `src/content/apps/`
+   - Use the [template](src/content/apps/_template.md) as a reference
+   - Add your app screenshot to `src/assets/apps/`
+3. **Submit** a Pull Request with your changes
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### Entry Requirements
 
-## 🧞 Commands
+Your submission should include:
+- A clear description of your app
+- At least one high-quality screenshot
+- Your name as the creator or company name
+- Brief app description
 
-All commands are run from the root of the project, from a terminal:
+## 🤝 Contributing
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+We welcome contributions from the Flutter community! Please ensure your submissions follow our guidelines and maintain high quality standards.
 
-## 👀 Want to learn more?
+## ⭐ Support
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+If you find this project useful, please consider:
+- Giving it a star on GitHub
+- Sharing it with other Flutter developers
+- Taking [The Best Flutter Course](https://hungrimind.com) by our sponsor
+
+## 📜 License
+
+This project is open source and available under the MIT license.
