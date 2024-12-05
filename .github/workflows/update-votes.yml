@@ -22,6 +22,9 @@ jobs:
           script: |
             const fs = require('fs').promises;
             
+            // Get the current year
+            const currentYear = new Date().getFullYear();
+            
             // Get all discussions in the Flutter of the Year category
             const allDiscussions = [];
             let hasNextPage = true;
@@ -36,9 +39,7 @@ jobs:
                         nodes {
                           id
                           title
-                          reactions(content: THUMBS_UP) {
-                            totalCount
-                          }
+                          upvoteCount
                         }
                         pageInfo {
                           hasNextPage
@@ -82,14 +83,14 @@ jobs:
                 const appName = discussion.title.replace('Vote: ', '').split(' by ')[0];
                 votes[appName] = {
                   id: discussion.id,
-                  votes: discussion.reactions.totalCount
+                  votes: discussion.upvoteCount
                 };
               }
             }
             
             // Write the votes to a JSON file
             await fs.writeFile(
-              'src/data/votes.json', 
+              `src/data/votes_${currentYear}.json`, 
               JSON.stringify(votes, null, 2)
             );
             
@@ -97,6 +98,6 @@ jobs:
             const date = new Date().toISOString();
             await exec.exec('git', ['config', 'user.name', 'github-actions[bot]']);
             await exec.exec('git', ['config', 'user.email', 'github-actions[bot]@users.noreply.github.com']);
-            await exec.exec('git', ['add', 'src/data/votes.json']);
-            await exec.exec('git', ['commit', '-m', `Update vote counts - ${date}`]);
+            await exec.exec('git', ['add', `src/data/votes_${currentYear}.json`]);
+            await exec.exec('git', ['commit', '-m', `Update vote counts for ${currentYear} - ${date}`]);
             await exec.exec('git', ['push']);

@@ -44,13 +44,14 @@ jobs:
             echo "author=..." >> $GITHUB_OUTPUT
             echo "description=..." >> $GITHUB_OUTPUT
           fi
+          echo "year=$(date +%Y)" >> $GITHUB_OUTPUT
 
       - name: Create Discussion
         uses: abirismyname/create-discussion@v1.2.0
         with:
-          title: "Vote: ${{ steps.app-data.outputs.name }} by ${{ steps.app-data.outputs.author }}"
+          title: "Vote ${{ steps.app-data.outputs.year }}: ${{ steps.app-data.outputs.name }} by ${{ steps.app-data.outputs.author }}"
           body: |
-            🗳️ **Vote for this app by giving it a 👍 reaction!**
+            **Vote for this app by giving it an upvote!**
             
             ${{ steps.app-data.outputs.description }}
           repository-id: ${{ secrets.REPO_ID }}
