@@ -2,7 +2,7 @@
 
 A curated showcase of the most innovative Flutter applications of the year. This community-driven collection celebrates creativity, technical excellence, and the vibrant Flutter ecosystem.
 
-[![Sponsored by Hungrimind.com](https://img.shields.io/badge/Sponsored%20by-Hungrimind.com-blue)](https://hungrimind.com)
+[![Sponsored by Hungrimind](https://img.shields.io/badge/Sponsored%20by-Hungrimind-blue)](https://hungrimind.com)
 
 > 🎓 Sponsored by **Hungrimind** - Learn Flutter with **[The Best Flutter Course on the Internet](https://hungrimind.com/learn/flutter?utm_source=flutter_of_the_year&utm_medium=github)**
 
