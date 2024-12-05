@@ -7,7 +7,7 @@ const apps = defineCollection({
     author: z.string(),
     description: z.string().max(280),
     dateLaunched: z.string().transform((str) => new Date(str)),
-    image: image(),
+    images: z.array(image()),
     platforms: z.array(
       z.object({
         name: z.enum(['Android', 'iOS', 'Web', 'macOS', 'Windows', 'Linux']),

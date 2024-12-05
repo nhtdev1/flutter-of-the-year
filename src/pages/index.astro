@@ -63,22 +63,31 @@ const sortedApps = allApps.sort((a, b) => {
                 {sortedApps.map((app) => (
                     <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
                         <div class="p-6">
-                            <!-- App Screenshot -->
+                            <!-- App Screenshots -->
                             <div class="w-48 aspect-[8/16] mx-auto mb-6 rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
-                                {app.data.image ? (
+                                {app.data.images ? (
                                     <Image 
-                                        src={app.data.image}
+                                        src={app.data.images[0]}
                                         alt={`${app.data.name} screenshot`}
                                         width={400}
                                         height={711}
                                         class="w-full h-full object-cover"
                                     />
-                                ) : (
+                                )  : (
                                     <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400 text-sm text-center px-2">
                                         Mobile Screenshot Required (9:16)
                                     </div>
                                 )}
                             </div>
+
+                            <!-- Image Indicators if multiple images -->
+                            {app.data.images && app.data.images.length > 1 && (
+                                <div class="flex justify-center gap-1 mb-4">
+                                    {app.data.images.map((_, index) => (
+                                        <div class="w-1.5 h-1.5 rounded-full bg-white/50" />
+                                    ))}
+                                </div>
+                            )}
 
                             <!-- App Info -->
                             <div class="text-center space-y-3 mb-4">

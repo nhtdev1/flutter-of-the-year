@@ -3,7 +3,8 @@ name: "App Name"
 author: "Author Name"
 description: "A short description of the app (1-2 sentences)"
 dateLaunched: "YYYY-MM-DD"
-image: "https://example.com/image.png"
+images:
+  - "https://example.com/image.png"
 platforms:
   - name: "Android"
     url: "https://play.google.com/store/apps/details?id=com.example"
