@@ -60,122 +60,168 @@ const sortedApps = allApps.sort((a, b) => {
           >
             The Best Flutter Apps of {currentYear} <span class="inline-block animate-sparkle">✨</span>
           </h1>
-          <p class="text-lg text-blue-200/80 max-w-3xl mx-auto mb-16">
+          <p class="text-lg text-blue-200/80 max-w-3xl mx-auto mb-8">
             The Best is an arbitrary phrase and means different things to different people. Vote for the apps that you like the most, that solve the most interesting problem. Whatever your definition of The Best is, go with that for your votes. You can also vote for multiple apps.
           </p>
-        </div>
 
-        <!-- Submit CTA -->
-          <div
-            class="bg-white/5 backdrop-blur-lg rounded-xl p-5 border border-white/10 hover:bg-white/10 transition-colors duration-300"
-          >
-            <h2 class="text-lg font-bold mb-2">Built Something Amazing?</h2>
-            <p class="text-blue-200/90 text-sm mb-3">
-              Share your Flutter app with the community and showcase your work in the Flutter of the
-              Year collection!
-            </p>
-            <a
-              href="https://github.com/hungrimind/flutter-of-the-year"
-              class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-all duration-300 hover:scale-105 text-sm"
-            >
-              Submit Your App
-            </a>
+          <div class="flex flex-col items-center gap-2 mb-16">
+            <p class="text-sm text-blue-200/60">Time left to submit and vote</p>
+            <div class="flex gap-4 text-center">
+              <div class="w-20">
+                <div class="text-2xl font-bold" id="days">--</div>
+                <div class="text-xs text-blue-200/60 uppercase tracking-wider">Days</div>
+              </div>
+              <div class="w-20">
+                <div class="text-2xl font-bold" id="hours">--</div>
+                <div class="text-xs text-blue-200/60 uppercase tracking-wider">Hours</div>
+              </div>
+              <div class="w-20">
+                <div class="text-2xl font-bold" id="minutes">--</div>
+                <div class="text-xs text-blue-200/60 uppercase tracking-wider">Minutes</div>
+              </div>
+              <div class="w-20">
+                <div class="text-2xl font-bold" id="seconds">--</div>
+                <div class="text-xs text-blue-200/60 uppercase tracking-wider">Seconds</div>
+              </div>
+            </div>
           </div>
-        <!-- Apps Grid -->
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {sortedApps.map((app) => (
-                    <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
-                        <div class="p-6">
-                            <!-- App Screenshots -->
-                            <!-- App Screenshots Carousel -->
-                            <div class="relative w-full mx-auto mb-6">
-                                <div class="overflow-x-auto scrollbar-hide snap-x snap-mandatory flex gap-4 h-96">
-                                    {app.data.images ? (
-                                        app.data.images.map((image, idx) => (
-                                            <div class="flex-none w-48 h-full snap-center">
-                                                <div class="h-full rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
-                                                    <Image 
-                                                        src={image}
-                                                        alt={`${app.data.name} screenshot ${idx + 1}`}
-                                                        width={400}
-                                                        height={711}
-                                                        class="w-full h-full object-cover"
-                                                    />
-                                                </div>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <div class="flex-none w-48 h-full snap-center">
-                                            <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400 text-sm text-center px-2 rounded-lg">
-                                                Mobile Screenshot Required (9:16)
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
 
-                                <!-- Image Indicators -->
-                                {app.data.images && app.data.images.length > 1 && (
-                                    <div class="flex justify-center gap-1.5 mt-4">
-                                        {app.data.images.map((_, index) => (
-                                            <button 
-                                                class="w-2 h-2 rounded-full bg-white/50 hover:bg-white/70 transition-colors"
-                                                onclick={`this.parentElement.parentElement.querySelector('.overflow-x-auto').scrollTo({
-                                                    left: ${index * 192}, 
-                                                    behavior: 'smooth'
-                                                })`}
-                                            />
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                            <!-- App Info -->
-                            <div class="text-center space-y-3 mb-4">
-                                <div>
-                                    <h2 class="text-xl font-bold">{app.data.name}</h2>
-                                    <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
-                                </div>
-                                
-                                <a 
-                                    href={`https://github.com${votes[app.data.name]?.slug}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
-                                >
-                                    <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    <span class="text-lg font-medium">{votes[app.data.name]?.votes}</span>
-                                </a>
-                            </div>
-
-                            <!-- App Description -->
-                            <p class="text-gray-300 text-sm mb-6 text-center">{app.data.description}</p>
-
-                            <!-- App Links -->
-                            <div class="flex justify-center gap-4">
-                                {app.data.platforms.map((platform) => (
-                                    <a 
-                                        href={platform.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="text-blue-400 hover:text-blue-300 transition-colors px-3 py-1 border border-blue-400/30 rounded-full text-sm"
-                                    >
-                                        {platform.name}
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                ))}
-         
+          <!-- Submit CTA -->
+          <div class="max-w-xl mx-auto mb-8">
+            <div
+              class="bg-white/5 backdrop-blur-lg rounded-xl p-5 border border-white/10 hover:bg-white/10 transition-colors duration-300"
+            >
+              <h2 class="text-lg font-bold mb-2">Built Something Amazing?</h2>
+              <p class="text-blue-200/90 text-sm mb-3">
+                Share your Flutter app with the community and showcase your work in the Flutter of the
+                Year collection!
+              </p>
+              <a
+                href="https://github.com/hungrimind/flutter-of-the-year"
+                class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-all duration-300 hover:scale-105 text-sm"
+              >
+                Submit Your App
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    
+    <!-- Apps Grid -->
+    <div class="container mx-auto px-4 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedApps.map((app) => (
+          <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
+            <div class="p-6">
+              <!-- App Screenshots -->
+              <!-- App Screenshots Carousel -->
+              <div class="relative w-full mx-auto mb-6">
+                <div class="overflow-x-auto scrollbar-hide snap-x snap-mandatory flex gap-4 h-96">
+                  {app.data.images ? (
+                    app.data.images.map((image, idx) => (
+                      <div class="flex-none w-48 h-full snap-center">
+                        <div class="h-full rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
+                          <Image 
+                            src={image}
+                            alt={`${app.data.name} screenshot ${idx + 1}`}
+                            width={400}
+                            height={711}
+                            class="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div class="flex-none w-48 h-full snap-center">
+                      <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400 text-sm text-center px-2 rounded-lg">
+                        Mobile Screenshot Required (9:16)
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <!-- Image Indicators -->
+                {app.data.images && app.data.images.length > 1 && (
+                  <div class="flex justify-center gap-1.5 mt-4">
+                    {app.data.images.map((_, index) => (
+                      <button 
+                        class="w-2 h-2 rounded-full bg-white/50 hover:bg-white/70 transition-colors"
+                        onclick={`this.parentElement.parentElement.querySelector('.overflow-x-auto').scrollTo({
+                          left: ${index * 192}, 
+                          behavior: 'smooth'
+                        })`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <!-- App Info -->
+              <div class="text-center space-y-3 mb-4">
+                <div>
+                  <h2 class="text-xl font-bold">{app.data.name}</h2>
+                  <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
+                </div>
+                
+                <a 
+                  href={`https://github.com${votes[app.data.name]?.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
+                >
+                  <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="text-lg font-medium">{votes[app.data.name]?.votes}</span>
+                </a>
+              </div>
+
+              <!-- App Description -->
+              <p class="text-gray-300 text-sm mb-6 text-center">{app.data.description}</p>
+
+              <!-- App Links -->
+              <div class="flex justify-center gap-4">
+                {app.data.platforms.map((platform) => (
+                  <a 
+                    href={platform.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-400 hover:text-blue-300 transition-colors px-3 py-1 border border-blue-400/30 rounded-full text-sm"
+                  >
+                    {platform.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   </main>
 </Layout>
+
+<script>
+  function updateCountdown() {
+    const now = new Date();
+    const endOfYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59); // December 31st at 23:59:59
+    const diff = endOfYear.getTime() - now.getTime();
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+  }
+
+  // Update immediately and then every second
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
 
 <style>
   @keyframes float {
@@ -228,16 +274,13 @@ const sortedApps = allApps.sort((a, b) => {
   .border-bronze {
     border-color: var(--color-bronze);
   }
-    .border-gold { border-color: var(--color-gold); }
-    .border-silver { border-color: var(--color-silver); }
-    .border-bronze { border-color: var(--color-bronze); }
 
-    /* Hide scrollbar but keep functionality */
-    .scrollbar-hide {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;     /* Firefox */
-    }
-    .scrollbar-hide::-webkit-scrollbar {
-        display: none;            /* Chrome, Safari and Opera */
-    }
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;            /* Chrome, Safari and Opera */
+  }
 </style>
