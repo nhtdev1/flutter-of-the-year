@@ -4,7 +4,7 @@ A curated showcase of the most innovative Flutter applications of the year. This
 
 [![Sponsored by Hungrimind.com](https://img.shields.io/badge/Sponsored%20by-Hungrimind.com-blue)](https://hungrimind.com)
 
-> 🎓 **Sponsored by [Hungrimind.com](https://hungrimind.com)** - The Best Flutter Course on the Internet
+> 🎓 **Sponsored by [Hungrimind.com](https://hungrimind.com/learn/flutter?utm_source=flutter_of_the_year&utm_medium=github)** - The Best Flutter Course on the Internet
 
 ## About
 
@@ -36,7 +36,7 @@ We welcome contributions from the Flutter community! Please ensure your submissi
 If you find this project useful, please consider:
 - Giving it a star on GitHub
 - Sharing it with other Flutter developers
-- Taking [The Best Flutter Course](https://hungrimind.com) by our sponsor
+- Taking [The Best Flutter Course](https://hungrimind.com/learn/flutter?utm_source=flutter_of_the_year&utm_medium=github) by our sponsor
 
 ## 📜 License
 
