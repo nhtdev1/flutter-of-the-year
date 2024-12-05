@@ -16,5 +16,5 @@ Being productive is not that difficult. You need to decide what to do, then do i
 
 ## Links
 
-- [X](https://x.com/tadaspetra)
-- [X](https://x.com/RobertBrunhage)
+- [Tadas Petra](https://x.com/tadaspetra)
+- [Robert Brunhage](https://x.com/RobertBrunhage)
