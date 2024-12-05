@@ -10,149 +10,195 @@ const votes: VoteData = getVotes();
 
 // Sort apps by vote count (descending)
 const sortedApps = allApps.sort((a, b) => {
-    const votesA = votes[a.data.name]?.votes || 0;
-    const votesB = votes[b.data.name]?.votes || 0;
-    return votesB - votesA;
+  const votesA = votes[a.data.name]?.votes || 0;
+  const votesB = votes[b.data.name]?.votes || 0;
+  return votesB - votesA;
 });
-
 ---
 
 <Layout>
-    <main class="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white">
-        <!-- Hero Section -->
-        <div class="relative overflow-hidden">
-            <div class="absolute inset-0">
-                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTJ2Mmgydi0yem0tMjAgMGgydjJoLTJ2LTJ6bTIwLTIwdi0yaDJ2MmgtMnptLTIwIDBoMnYyaC0ydi0yeiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
-            </div>
-            <div class="container mx-auto px-4 pt-4 pb-16 relative">
-
-                <!-- Sponsor Banner -->
-                <div class="mb-6 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-lg p-3 backdrop-blur-sm border border-white/10 transform hover:scale-102 transition-all duration-300">
-                    <p class="text-white/90">
-                        Sponsored by <a href="https://hungrimind.com" class="font-bold text-blue-400 hover:text-blue-300 transition-colors">Hungrimind.com</a>
-                        <span class="block text-sm mt-0.5 text-blue-200/90">The Best Flutter Course On The Internet</span>
-                    </p>
-                </div>
-                 
-                <div class="text-center">
-                    <h1 class="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
-                        Flutter of the Year
-                    </h1>
-                    <p class="text-2xl text-blue-200 mb-12">Celebrating the Best Flutter Apps of {currentYear} ✨</p>
-                </div>
-
-                <!-- Submit CTA -->
-                <div class="max-w-xl mx-auto mb-8">
-                    <div class="bg-white/5 backdrop-blur-lg rounded-xl p-5 border border-white/10 hover:bg-white/10 transition-colors duration-300">
-                        <h2 class="text-lg font-bold mb-2">Built Something Amazing?</h2>
-                        <p class="text-blue-200/90 text-sm mb-3">Share your Flutter app with the community and showcase your work in the Flutter of the Year collection!</p>
-                        <a 
-                            href="https://github.com/hungrimind/flutter-of-the-year"
-                            class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-all duration-300 hover:scale-105 text-sm"
-                        >
-                            Submit Your App
-                        </a>
-                    </div>
-                </div>
-            </div>
+  <main class="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white">
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+      <div class="absolute inset-0">
+        <div
+          class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTJ2Mmgydi0yem0tMjAgMGgydjJoLTJ2LTJ6bTIwLTIwdi0yaDJ2MmgtMnptLTIwIDBoMnYyaC0ydi0yeiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"
+        >
+        </div>
+      </div>
+      <div class="container mx-auto px-4 pt-4 pb-16 relative">
+        <!-- Sponsor Banner -->
+        <div
+          class="mb-6 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-lg p-3 backdrop-blur-sm border border-white/10 transform hover:scale-102 transition-all duration-300"
+        >
+          <p class="text-white/90">
+            Sponsored by <a
+              href="https://hungrimind.com"
+              class="font-bold text-blue-400 hover:text-blue-300 transition-colors"
+              >Hungrimind.com</a
+            >
+            <span class="block text-sm mt-0.5 text-blue-200/90"
+              >The Best Flutter Course On The Internet</span
+            >
+          </p>
         </div>
 
-        <!-- Apps Grid -->
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {sortedApps.map((app) => (
-                    <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
-                        <div class="p-6">
-                            <!-- App Screenshots -->
-                            <div class="w-48 aspect-[8/16] mx-auto mb-6 rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
-                                {app.data.images ? (
-                                    <Image 
-                                        src={app.data.images[0]}
-                                        alt={`${app.data.name} screenshot`}
-                                        width={400}
-                                        height={711}
-                                        class="w-full h-full object-cover"
-                                    />
-                                )  : (
-                                    <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400 text-sm text-center px-2">
-                                        Mobile Screenshot Required (9:16)
-                                    </div>
-                                )}
-                            </div>
-
-                            <!-- Image Indicators if multiple images -->
-                            {app.data.images && app.data.images.length > 1 && (
-                                <div class="flex justify-center gap-1 mb-4">
-                                    {app.data.images.map((_, index) => (
-                                        <div class="w-1.5 h-1.5 rounded-full bg-white/50" />
-                                    ))}
-                                </div>
-                            )}
-
-                            <!-- App Info -->
-                            <div class="text-center space-y-3 mb-4">
-                                <div>
-                                    <h2 class="text-xl font-bold">{app.data.name}</h2>
-                                    <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
-                                </div>
-                                
-                                <a 
-                                    href={`https://github.com${votes[app.data.name]?.slug}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
-                                >
-                                    <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    <span class="text-lg font-medium">{votes[app.data.name]?.votes}</span>
-                                </a>
-                            </div>
-
-                            <!-- App Description -->
-                            <p class="text-gray-300 text-sm mb-6 text-center">{app.data.description}</p>
-
-                            <!-- App Links -->
-                            <div class="flex justify-center gap-4">
-                                {app.data.platforms.map((platform) => (
-                                    <a 
-                                        href={platform.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="text-blue-400 hover:text-blue-300 transition-colors px-3 py-1 border border-blue-400/30 rounded-full text-sm"
-                                    >
-                                        {platform.name}
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+        <div class="text-center">
+          <h1
+            class="text-6xl font-bold mb-4 text-white"
+          >
+            The Best Flutter Apps of {currentYear} ✨
+          </h1>
+          <p class="text-lg text-blue-200/80 max-w-3xl mx-auto mb-12">
+            The Best is an arbitrary phrase and means different things to different people. Vote for the apps that you like the most, that solve the most interesting problem. Whatever your definition of The Best is, go with that for your votes. You can also vote for multiple apps.
+          </p>
         </div>
 
-        
-    </main>
+        <!-- Submit CTA -->
+        <div class="max-w-xl mx-auto mb-8">
+          <div
+            class="bg-white/5 backdrop-blur-lg rounded-xl p-5 border border-white/10 hover:bg-white/10 transition-colors duration-300"
+          >
+            <h2 class="text-lg font-bold mb-2">Built Something Amazing?</h2>
+            <p class="text-blue-200/90 text-sm mb-3">
+              Share your Flutter app with the community and showcase your work in the Flutter of the
+              Year collection!
+            </p>
+            <a
+              href="https://github.com/hungrimind/flutter-of-the-year"
+              class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-5 rounded-full transition-all duration-300 hover:scale-105 text-sm"
+            >
+              Submit Your App
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apps Grid -->
+    <div class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          sortedApps.map((app) => (
+            <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
+              <div class="p-6">
+                {/* App Screenshots */}
+                <div class="w-48 aspect-[8/16] mx-auto mb-6 rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
+                  {app.data.images ? (
+                    <Image
+                      src={app.data.images[0]}
+                      alt={`${app.data.name} screenshot`}
+                      width={400}
+                      height={711}
+                      class="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400 text-sm text-center px-2">
+                      Mobile Screenshot Required (9:16)
+                    </div>
+                  )}
+                </div>
+
+                {/* Image Indicators if multiple images */}
+                {app.data.images && app.data.images.length > 1 && (
+                  <div class="flex justify-center gap-1 mb-4">
+                    {app.data.images.map((_, index) => (
+                      <div class="w-1.5 h-1.5 rounded-full bg-white/50" />
+                    ))}
+                  </div>
+                )}
+
+                {/* App Info */}
+                <div class="text-center space-y-3 mb-4">
+                  <div>
+                    <h2 class="text-xl font-bold">{app.data.name}</h2>
+                    <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
+                  </div>
+
+                  <a
+                    href={`https://github.com${votes[app.data.name]?.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
+                  >
+                    <svg
+                      class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M12 19V5M5 12l7-7 7 7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    <span class="text-lg font-medium">{votes[app.data.name]?.votes}</span>
+                  </a>
+                </div>
+
+                {/* App Description */}
+                <p class="text-gray-300 text-sm mb-6 text-center">{app.data.description}</p>
+
+                {/* App Links */}
+                <div class="flex justify-center gap-4">
+                  {app.data.platforms.map((platform) => (
+                    <a
+                      href={platform.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-blue-400 hover:text-blue-300 transition-colors px-3 py-1 border border-blue-400/30 rounded-full text-sm"
+                    >
+                      {platform.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </main>
 </Layout>
 
 <style>
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
     }
-
-    :root {
-        --color-gold: #FFD700;
-        --color-silver: #C0C0C0;
-        --color-bronze: #CD7F32;
+    50% {
+      transform: translateY(-10px);
     }
+    100% {
+      transform: translateY(0px);
+    }
+  }
 
-    .text-gold { color: var(--color-gold); }
-    .text-silver { color: var(--color-silver); }
-    .text-bronze { color: var(--color-bronze); }
+  :root {
+    --color-gold: #ffd700;
+    --color-silver: #c0c0c0;
+    --color-bronze: #a87333;
+  }
 
-    .border-gold { border-color: var(--color-gold); }
-    .border-silver { border-color: var(--color-silver); }
-    .border-bronze { border-color: var(--color-bronze); }
+  .text-gold {
+    color: var(--color-gold);
+  }
+  .text-silver {
+    color: var(--color-silver);
+  }
+  .text-bronze {
+    color: var(--color-bronze);
+  }
+
+  .border-gold {
+    border-color: var(--color-gold);
+  }
+  .border-silver {
+    border-color: var(--color-silver);
+  }
+  .border-bronze {
+    border-color: var(--color-bronze);
+  }
 </style>
