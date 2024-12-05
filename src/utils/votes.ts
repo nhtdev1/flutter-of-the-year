@@ -1,6 +1,6 @@
 export interface VoteData {
   [appName: string]: {
-    id: string;
+    slug: string;
     votes: number;
   };
 }

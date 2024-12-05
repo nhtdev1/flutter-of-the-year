@@ -39,6 +39,7 @@ jobs:
                         nodes {
                           id
                           title
+                          resourcePath
                           upvoteCount
                         }
                         pageInfo {
@@ -82,7 +83,7 @@ jobs:
               if (discussion.title.startsWith('Vote ' + currentYear)) {
                 const appName = discussion.title.split(': ')[1].split(' by ')[0];
                 votes[appName] = {
-                  id: discussion.id,
+                  slug: discussion.resourcePath,
                   votes: discussion.upvoteCount
                 };
               }

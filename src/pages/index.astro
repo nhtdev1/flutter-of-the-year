@@ -61,7 +61,7 @@ const sortedApps = allApps.sort((a, b) => {
         <div class="container mx-auto px-4 py-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {sortedApps.map((app) => (
-                    <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300 border border-white/20">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
                         <div class="p-6">
                             <!-- App Screenshot -->
                             <div class="w-48 aspect-[8/16] mx-auto mb-6 rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
@@ -81,19 +81,26 @@ const sortedApps = allApps.sort((a, b) => {
                             </div>
 
                             <!-- App Info -->
-                            <div class="flex flex-col items-center gap-3 mb-4">
-                                <h2 class="text-xl font-bold text-center">{app.data.name}</h2>
+                            <div class="text-center space-y-3 mb-4">
+                                <div>
+                                    <h2 class="text-xl font-bold">{app.data.name}</h2>
+                                    <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
+                                </div>
+                                
                                 <a 
-                                    href={`https://github.com/hungrimind/flutter-of-the-year/discussions/${votes[app.data.name]?.id}`}
+                                    href={`https://github.com${votes[app.data.name]?.slug}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full transition-colors"
+                                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
                                 >
-                                    <span class="text-blue-300">👍</span>
-                                    <span class="text-sm font-medium">{votes[app.data.name]?.votes || 0}</span>
+                                    <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span class="text-lg font-medium">{votes[app.data.name]?.votes}</span>
                                 </a>
                             </div>
-                            <p class="text-blue-200 text-sm mb-2 text-center">by {app.data.author}</p>
+
+                            <!-- App Description -->
                             <p class="text-gray-300 text-sm mb-6 text-center">{app.data.description}</p>
 
                             <!-- App Links -->
