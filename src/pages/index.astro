@@ -1,6 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import { getVotes, type VoteData } from '../utils/votes';
 
@@ -65,6 +65,7 @@ const sortedApps = allApps.sort((a, b) => {
           </p>
         </div>
 
+<<<<<<< Updated upstream
         <!-- Submit CTA -->
         <div class="max-w-xl mx-auto mb-8">
           <div
@@ -82,6 +83,96 @@ const sortedApps = allApps.sort((a, b) => {
               Submit Your App
             </a>
           </div>
+=======
+        <!-- Apps Grid -->
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {sortedApps.map((app) => (
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
+                        <div class="p-6">
+                            <!-- App Screenshots -->
+                            <!-- App Screenshots Carousel -->
+                            <div class="relative w-full mx-auto mb-6">
+                                <div class="overflow-x-auto scrollbar-hide snap-x snap-mandatory flex gap-4 h-96">
+                                    {app.data.images ? (
+                                        app.data.images.map((image, idx) => (
+                                            <div class="flex-none w-48 h-full snap-center">
+                                                <div class="h-full rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
+                                                    <Image 
+                                                        src={image}
+                                                        alt={`${app.data.name} screenshot ${idx + 1}`}
+                                                        width={400}
+                                                        height={711}
+                                                        class="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div class="flex-none w-48 h-full snap-center">
+                                            <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400 text-sm text-center px-2 rounded-lg">
+                                                Mobile Screenshot Required (9:16)
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <!-- Image Indicators -->
+                                {app.data.images && app.data.images.length > 1 && (
+                                    <div class="flex justify-center gap-1.5 mt-4">
+                                        {app.data.images.map((_, index) => (
+                                            <button 
+                                                class="w-2 h-2 rounded-full bg-white/50 hover:bg-white/70 transition-colors"
+                                                onclick={`this.parentElement.parentElement.querySelector('.overflow-x-auto').scrollTo({
+                                                    left: ${index * 192}, 
+                                                    behavior: 'smooth'
+                                                })`}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            <!-- App Info -->
+                            <div class="text-center space-y-3 mb-4">
+                                <div>
+                                    <h2 class="text-xl font-bold">{app.data.name}</h2>
+                                    <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
+                                </div>
+                                
+                                <a 
+                                    href={`https://github.com${votes[app.data.name]?.slug}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
+                                >
+                                    <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span class="text-lg font-medium">{votes[app.data.name]?.votes}</span>
+                                </a>
+                            </div>
+
+                            <!-- App Description -->
+                            <p class="text-gray-300 text-sm mb-6 text-center">{app.data.description}</p>
+
+                            <!-- App Links -->
+                            <div class="flex justify-center gap-4">
+                                {app.data.platforms.map((platform) => (
+                                    <a 
+                                        href={platform.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-blue-400 hover:text-blue-300 transition-colors px-3 py-1 border border-blue-400/30 rounded-full text-sm"
+                                    >
+                                        {platform.name}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+>>>>>>> Stashed changes
         </div>
       </div>
     </div>
@@ -196,6 +287,7 @@ const sortedApps = allApps.sort((a, b) => {
     }
   }
 
+<<<<<<< Updated upstream
   .animate-sparkle {
     animation: sparkle 2s ease-in-out infinite;
   }
@@ -225,4 +317,18 @@ const sortedApps = allApps.sort((a, b) => {
   .border-bronze {
     border-color: var(--color-bronze);
   }
+=======
+    .border-gold { border-color: var(--color-gold); }
+    .border-silver { border-color: var(--color-silver); }
+    .border-bronze { border-color: var(--color-bronze); }
+
+    /* Hide scrollbar but keep functionality */
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;     /* Firefox */
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;            /* Chrome, Safari and Opera */
+    }
+>>>>>>> Stashed changes
 </style>
