@@ -34,6 +34,7 @@ jobs:
                     repository(owner: $owner, name: $repo) {
                       discussions(first: 50, after: $cursor) {
                         nodes {
+                          id
                           title
                           reactions(content: THUMBS_UP) {
                             totalCount
@@ -79,7 +80,10 @@ jobs:
             for (const discussion of allDiscussions) {
               if (discussion.title.startsWith('Vote: ')) {
                 const appName = discussion.title.replace('Vote: ', '').split(' by ')[0];
-                votes[appName] = discussion.reactions.totalCount;
+                votes[appName] = {
+                  id: discussion.id,
+                  votes: discussion.reactions.totalCount
+                };
               }
             }
             

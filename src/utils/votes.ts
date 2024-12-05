@@ -1,5 +1,8 @@
 export interface VoteData {
-  [appName: string]: number;
+  [appName: string]: {
+    id: string;
+    votes: number;
+  };
 }
 
 export function getVotes(): VoteData {
