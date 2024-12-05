@@ -1,0 +1,58 @@
+name: Create GitHub Discussions
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - 'src/content/apps/**'
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'App Name'
+        required: true
+        type: string
+      author:
+        description: 'App Author'
+        required: true
+        type: string
+      description:
+        description: 'App Description'
+        required: true
+        type: string
+
+jobs:
+  create-discussion:
+    runs-on: ubuntu-latest
+    permissions:
+      discussions: write
+      pull-requests: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Get App Data
+        id: app-data
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "name=${{ inputs.name }}" >> $GITHUB_OUTPUT
+            echo "author=${{ inputs.author }}" >> $GITHUB_OUTPUT
+            echo "description=${{ inputs.description }}" >> $GITHUB_OUTPUT
+          else
+            # Add script to extract app data from PR changes
+            echo "name=..." >> $GITHUB_OUTPUT
+            echo "author=..." >> $GITHUB_OUTPUT
+            echo "description=..." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Discussion
+        uses: abirismyname/create-discussion@v1.2.0
+        with:
+          title: "Vote: ${{ steps.app-data.outputs.name }} by ${{ steps.app-data.outputs.author }}"
+          body: |
+            🗳️ **Vote for this app by giving it a 👍 reaction!**
+            
+            ${{ steps.app-data.outputs.description }}
+          repository-id: ${{ secrets.REPO_ID }}
+          category-id: ${{ secrets.CAT_ID }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
