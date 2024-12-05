@@ -2,7 +2,7 @@ name: Create GitHub Discussions
 
 on:
   pull_request:
-    types: [opened]
+    types: [closed]
     paths:
       - 'src/content/apps/**'
   workflow_dispatch:
@@ -22,6 +22,7 @@ on:
 
 jobs:
   create-discussion:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       discussions: write
