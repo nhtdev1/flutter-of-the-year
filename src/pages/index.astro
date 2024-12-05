@@ -18,6 +18,33 @@ const sortedApps = allApps.sort((a, b) => {
 
 <Layout>
   <main class="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white">
+    <div class="sticky top-0 z-50 backdrop-blur-sm py-4">
+      <div class="flex justify-center">
+        <div
+          class="group bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-lg px-6 py-3 backdrop-blur-sm border border-white/10 flex items-center gap-3 transition-all duration-500 ease-in-out hover:gap-6 cursor-pointer peer"
+        >
+          <div class="flex items-center gap-1 min-w-max">
+            <span class="text-white/90 text-sm">Sponsored by</span>
+            <span class="font-bold text-white text-sm">hungrimind</span>
+          </div>
+          
+          <div class="max-w-0 overflow-hidden group-hover:max-w-[800px] peer-focus:max-w-[800px] transition-all duration-500 ease-in-out flex items-center gap-3">
+            <span class="text-white/80 opacity-0 group-hover:opacity-100 peer-focus:opacity-100 transition-opacity duration-500 delay-150">·</span>
+            <span class="text-white/80 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 peer-focus:opacity-100 transition-opacity duration-500 delay-150">Click here to get The Best Flutter Course on the Internet</span>
+            <a
+              href="https://hungrimind.com"
+              class="bg-gray-900/60 hover:bg-gray-900/80 text-white px-4 py-1.5 rounded-full text-sm font-medium transition-colors flex items-center gap-1 whitespace-nowrap opacity-0 group-hover:opacity-100 peer-focus:opacity-100 transition-opacity duration-500 delay-150"
+            >
+              Enroll Now
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Hero Section -->
     <div class="relative overflow-hidden">
       <div class="absolute inset-0">
@@ -26,30 +53,14 @@ const sortedApps = allApps.sort((a, b) => {
         >
         </div>
       </div>
-      <div class="container mx-auto px-4 pt-4 pb-16 relative">
-        <!-- Sponsor Banner -->
-        <div
-          class="mb-6 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-lg p-3 backdrop-blur-sm border border-white/10 transform hover:scale-102 transition-all duration-300"
-        >
-          <p class="text-white/90">
-            Sponsored by <a
-              href="https://hungrimind.com"
-              class="font-bold text-blue-400 hover:text-blue-300 transition-colors"
-              >Hungrimind.com</a
-            >
-            <span class="block text-sm mt-0.5 text-blue-200/90"
-              >The Best Flutter Course On The Internet</span
-            >
-          </p>
-        </div>
-
-        <div class="text-center">
+      <div class="container mx-auto px-4 pt-8 pb-24 relative">
+        <div class="text-center max-w-4xl mx-auto">
           <h1
-            class="text-6xl font-bold mb-4 text-white"
+            class="text-6xl font-bold mb-8 text-white"
           >
-            The Best Flutter Apps of {currentYear} ✨
+            The Best Flutter Apps of {currentYear} <span class="inline-block animate-sparkle">✨</span>
           </h1>
-          <p class="text-lg text-blue-200/80 max-w-3xl mx-auto mb-12">
+          <p class="text-lg text-blue-200/80 max-w-3xl mx-auto mb-16">
             The Best is an arbitrary phrase and means different things to different people. Vote for the apps that you like the most, that solve the most interesting problem. Whatever your definition of The Best is, go with that for your votes. You can also vote for multiple apps.
           </p>
         </div>
@@ -76,14 +87,14 @@ const sortedApps = allApps.sort((a, b) => {
     </div>
 
     <!-- Apps Grid -->
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {
           sortedApps.map((app) => (
-            <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
+            <div class="group bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20 hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10 hover:-translate-y-1">
               <div class="p-6">
                 {/* App Screenshots */}
-                <div class="w-48 aspect-[8/16] mx-auto mb-6 rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
+                <div class="w-48 aspect-[8/16] mx-auto mb-6 rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30 group-hover:ring-purple-500/40 transition-all duration-300">
                   {app.data.images ? (
                     <Image
                       src={app.data.images[0]}
@@ -109,17 +120,17 @@ const sortedApps = allApps.sort((a, b) => {
                 )}
 
                 {/* App Info */}
-                <div class="text-center space-y-3 mb-4">
+                <div class="text-center space-y-4 mb-6">
                   <div>
-                    <h2 class="text-xl font-bold">{app.data.name}</h2>
-                    <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
+                    <h2 class="text-xl font-bold group-hover:text-blue-200 transition-colors">{app.data.name}</h2>
+                    <p class="text-blue-200/80 text-sm mt-2">by {app.data.author}</p>
                   </div>
 
                   <a
                     href={`https://github.com${votes[app.data.name]?.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
+                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-4 py-1.5 rounded-full hover:bg-orange-400/10"
                   >
                     <svg
                       class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform"
@@ -174,6 +185,19 @@ const sortedApps = allApps.sort((a, b) => {
     100% {
       transform: translateY(0px);
     }
+  }
+
+  @keyframes sparkle {
+    0%, 100% {
+      transform: scale(1) rotate(0deg);
+    }
+    50% {
+      transform: scale(1.2) rotate(10deg);
+    }
+  }
+
+  .animate-sparkle {
+    animation: sparkle 2s ease-in-out infinite;
   }
 
   :root {
