@@ -79,8 +79,8 @@ jobs:
             // Create votes.json with the current vote counts
             const votes = {};
             for (const discussion of allDiscussions) {
-              if (discussion.title.startsWith('Vote: ')) {
-                const appName = discussion.title.replace('Vote: ', '').split(' by ')[0];
+              if (discussion.title.startsWith('Vote ' + currentYear)) {
+                const appName = discussion.title.split(': ')[1].split(' by ')[0];
                 votes[appName] = {
                   id: discussion.id,
                   votes: discussion.upvoteCount
