@@ -169,9 +169,8 @@ const sortedApps = allApps.sort((a, b) => {
                   <h2 class="text-xl font-bold">{app.data.name}</h2>
                   <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
                 </div>
-                
                 <a 
-                  href={`https://github.com${votes[app.data.name]?.slug}`}
+                  href={`https://github.com${votes.default[app.data.name]?.slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
@@ -179,7 +178,7 @@ const sortedApps = allApps.sort((a, b) => {
                   <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
-                  <span class="text-lg font-medium">{votes[app.data.name]?.votes}</span>
+                  <span class="text-lg font-medium">{votes.default[app.data.name]?.votes}</span>
                 </a>
               </div>
 

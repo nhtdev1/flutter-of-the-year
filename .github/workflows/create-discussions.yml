@@ -59,16 +59,27 @@ jobs:
               exit 1
             fi
             
-            # Extract data using grep and sed with error checking
-            NAME=$(grep -m 1 '^name: ' "$CHANGED_FILE" | sed 's/^name: "\(.*\)"$/\1/')
-            AUTHOR=$(grep -m 1 '^author: ' "$CHANGED_FILE" | sed 's/^author: "\(.*\)"$/\1/')
-            DESCRIPTION=$(grep -m 1 '^description: ' "$CHANGED_FILE" | sed 's/^description: "\(.*\)"$/\1/')
+            # Extract data using grep and sed with error checking and proper quote handling
+            NAME=$(grep -m 1 '^name: ' "$CHANGED_FILE" | sed -E 's/^name: "(.+)"$/\1/')
+            AUTHOR=$(grep -m 1 '^author: ' "$CHANGED_FILE" | sed -E 's/^author: "(.+)"$/\1/')
+            DESCRIPTION=$(grep -m 1 '^description: ' "$CHANGED_FILE" | sed -E 's/^description: "(.+)"$/\1/')
             
             # Verify we got all required data
             if [ -z "$NAME" ] || [ -z "$AUTHOR" ] || [ -z "$DESCRIPTION" ]; then
               echo "Failed to extract required metadata from $CHANGED_FILE"
               exit 1
             fi
+            
+            # Properly escape the values for GitHub Actions output
+            NAME="${NAME//'%'/'%25'}"
+            NAME="${NAME//$'\n'/'%0A'}"
+            NAME="${NAME//$'\r'/'%0D'}"
+            AUTHOR="${AUTHOR//'%'/'%25'}"
+            AUTHOR="${AUTHOR//$'\n'/'%0A'}"
+            AUTHOR="${AUTHOR//$'\r'/'%0D'}"
+            DESCRIPTION="${DESCRIPTION//'%'/'%25'}"
+            DESCRIPTION="${DESCRIPTION//$'\n'/'%0A'}"
+            DESCRIPTION="${DESCRIPTION//$'\r'/'%0D'}"
             
             echo "name=$NAME" >> $GITHUB_OUTPUT
             echo "author=$AUTHOR" >> $GITHUB_OUTPUT
