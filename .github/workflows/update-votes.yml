@@ -95,10 +95,19 @@ jobs:
               JSON.stringify(votes, null, 2)
             );
             
-            // Commit and push the changes
-            const date = new Date().toISOString();
-            await exec.exec('git', ['config', 'user.name', 'github-actions[bot]']);
-            await exec.exec('git', ['config', 'user.email', 'github-actions[bot]@users.noreply.github.com']);
-            await exec.exec('git', ['add', `src/data/votes_${currentYear}.json`]);
-            await exec.exec('git', ['commit', '-m', `Update vote counts for ${currentYear} - ${date}`]);
-            await exec.exec('git', ['push']);
+            // Check if there are any changes to commit
+            const { exitCode } = await exec.getExecOutput('git', ['status', '--porcelain']);
+            if (exitCode === 0) {
+              const date = new Date().toISOString();
+              await exec.exec('git', ['config', 'user.name', 'github-actions[bot]']);
+              await exec.exec('git', ['config', 'user.email', 'github-actions[bot]@users.noreply.github.com']);
+              await exec.exec('git', ['add', `src/data/votes_${currentYear}.json`]);
+              try {
+                await exec.exec('git', ['commit', '-m', `Update vote counts for ${currentYear} - ${date}`]);
+                await exec.exec('git', ['push']);
+              } catch (error) {
+                console.log('No changes to commit');
+              }
+            } else {
+              console.log('Error checking git status');
+            }
