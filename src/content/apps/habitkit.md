@@ -13,7 +13,7 @@ images:
 platforms:
   - name: "Android"
     url: "https://play.google.com/store/apps/details?id=com.roehl.habitkit&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
-  - name: "Ios"
+  - name: "iOS"
     url: "https://apps.apple.com/us/app/habit-tracker-habitkit/id6443918070?itsct=apps_box_badge&itscg=30200"
   - name: "Web"
     url: "https://www.habitkit.app"
