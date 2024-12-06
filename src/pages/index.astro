@@ -10,8 +10,8 @@ const votes: VoteData = getVotes();
 
 // Sort apps by vote count (descending)
 const sortedApps = allApps.sort((a, b) => {
-  const votesA = votes[a.data.name]?.votes || 0;
-  const votesB = votes[b.data.name]?.votes || 0;
+  const votesA = votes.default[a.data.name]?.votes || 0;
+  const votesB = votes.default[b.data.name]?.votes || 0;
   return votesB - votesA;
 });
 ---
