@@ -2,8 +2,11 @@ name: Update Vote Counts
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Run every 6 hours
-  workflow_dispatch:  # Allow manual triggers
+    - cron: "0 */1 * * *" # Run every 6 hours
+  workflow_dispatch: # Allow manual triggers
+  push:
+    branches:
+      - main
 
 jobs:
   update-votes:
@@ -13,7 +16,7 @@ jobs:
       discussions: read
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Update Vote Counts
         uses: actions/github-script@v7
         env:
@@ -21,10 +24,10 @@ jobs:
         with:
           script: |
             const fs = require('fs').promises;
-            
+
             // Get the current year
             const currentYear = new Date().getFullYear();
-            
+
             // Get all discussions in the Flutter of the Year category
             const allDiscussions = [];
             let hasNextPage = true;
@@ -76,7 +79,7 @@ jobs:
                 throw error;
               }
             }
-            
+
             // Create votes.json with the current vote counts
             const votes = {};
             for (const discussion of allDiscussions) {
@@ -88,13 +91,13 @@ jobs:
                 };
               }
             }
-            
+
             // Write the votes to a JSON file
             await fs.writeFile(
               `src/data/votes_${currentYear}.json`, 
               JSON.stringify(votes, null, 2)
             );
-            
+
             // Check if there are any changes to commit
             const { exitCode } = await exec.getExecOutput('git', ['status', '--porcelain']);
             if (exitCode === 0) {
