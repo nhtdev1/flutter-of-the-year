@@ -39,10 +39,17 @@ jobs:
             echo "author=${{ inputs.author }}" >> $GITHUB_OUTPUT
             echo "description=${{ inputs.description }}" >> $GITHUB_OUTPUT
           else
-            # Add script to extract app data from PR changes
-            echo "name=..." >> $GITHUB_OUTPUT
-            echo "author=..." >> $GITHUB_OUTPUT
-            echo "description=..." >> $GITHUB_OUTPUT
+            # Get the changed file path from the PR
+            CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/content/apps/.*\.md$')
+            
+            # Extract data using grep and sed
+            NAME=$(grep -m 1 '^name: ' "$CHANGED_FILE" | sed 's/^name: "\(.*\)"$/\1/')
+            AUTHOR=$(grep -m 1 '^author: ' "$CHANGED_FILE" | sed 's/^author: "\(.*\)"$/\1/')
+            DESCRIPTION=$(grep -m 1 '^description: ' "$CHANGED_FILE" | sed 's/^description: "\(.*\)"$/\1/')
+            
+            echo "name=$NAME" >> $GITHUB_OUTPUT
+            echo "author=$AUTHOR" >> $GITHUB_OUTPUT
+            echo "description=$DESCRIPTION" >> $GITHUB_OUTPUT
           fi
           echo "year=$(date +%Y)" >> $GITHUB_OUTPUT
 
