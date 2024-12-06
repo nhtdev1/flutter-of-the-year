@@ -370,17 +370,8 @@ const sortedApps = allApps.sort((a, b) => {
       
       const urlInput = checkbox.nextElementSibling?.nextElementSibling as HTMLInputElement | null;
       if (checkbox.checked && urlInput?.value) {
-        const platformMap: Record<string, string> = {
-          'android': 'Android',
-          'ios': 'iOS',
-          'web': 'Web',
-          'linux': 'Linux',
-          'macos': 'macOS',
-          'windows': 'Windows'
-        };
-
         formData.platforms.push({
-          name: platformMap[platform] || platform,
+          name: platform.charAt(0).toUpperCase() + platform.slice(1),
           url: urlInput.value
         });
       }
