@@ -1,28 +1,29 @@
 name: Create GitHub Discussions
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches:
+      - main
     paths:
-      - 'src/content/apps/**'
+      - "src/content/apps/**"
   workflow_dispatch:
     inputs:
       name:
-        description: 'App Name'
+        description: "App Name"
         required: true
         type: string
       author:
-        description: 'App Author'
+        description: "App Author"
         required: true
         type: string
       description:
-        description: 'App Description'
+        description: "App Description"
         required: true
         type: string
 
 jobs:
   create-discussion:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     permissions:
       discussions: write
@@ -30,22 +31,44 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Get App Data
         id: app-data
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            # For manual triggers, use the input parameters
             echo "name=${{ inputs.name }}" >> $GITHUB_OUTPUT
             echo "author=${{ inputs.author }}" >> $GITHUB_OUTPUT
             echo "description=${{ inputs.description }}" >> $GITHUB_OUTPUT
           else
-            # Get the changed file path from the PR
-            CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/content/apps/.*\.md$')
+            # For push events, get the changed files
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | grep '^src/content/apps/.*\.md$' || true)
             
-            # Extract data using grep and sed
+            # Check if we found any changed files
+            if [ -z "$CHANGED_FILES" ]; then
+              echo "No relevant files changed"
+              exit 0
+            fi
+            
+            # Use the first changed file
+            CHANGED_FILE=$(echo "$CHANGED_FILES" | head -n 1)
+            
+            # Verify file exists
+            if [ ! -f "$CHANGED_FILE" ]; then
+              echo "File $CHANGED_FILE not found"
+              exit 1
+            fi
+            
+            # Extract data using grep and sed with error checking
             NAME=$(grep -m 1 '^name: ' "$CHANGED_FILE" | sed 's/^name: "\(.*\)"$/\1/')
             AUTHOR=$(grep -m 1 '^author: ' "$CHANGED_FILE" | sed 's/^author: "\(.*\)"$/\1/')
             DESCRIPTION=$(grep -m 1 '^description: ' "$CHANGED_FILE" | sed 's/^description: "\(.*\)"$/\1/')
+            
+            # Verify we got all required data
+            if [ -z "$NAME" ] || [ -z "$AUTHOR" ] || [ -z "$DESCRIPTION" ]; then
+              echo "Failed to extract required metadata from $CHANGED_FILE"
+              exit 1
+            fi
             
             echo "name=$NAME" >> $GITHUB_OUTPUT
             echo "author=$AUTHOR" >> $GITHUB_OUTPUT
@@ -59,7 +82,7 @@ jobs:
           title: "Vote ${{ steps.app-data.outputs.year }}: ${{ steps.app-data.outputs.name }} by ${{ steps.app-data.outputs.author }}"
           body: |
             **Vote for this app by giving it an upvote!**
-            
+
             ${{ steps.app-data.outputs.description }}
           repository-id: ${{ secrets.REPO_ID }}
           category-id: ${{ secrets.CAT_ID }}
