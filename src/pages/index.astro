@@ -95,9 +95,16 @@ const sortedApps = allApps.sort((a, b) => {
                 Year collection!
               </p>
               <a
-                href="#"
+                href="https://github.com/hungrimind/flutter-of-the-year"
                 id="submitAppBtn"
-                class="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+                class="md:hidden inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                Submit Your App
+              </a>
+              <a
+                href="#"
+                id="submitAppBtnDesktop"
+                class="hidden md:inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Submit Your App
               </a>
@@ -608,8 +615,9 @@ platforms:${formData.platforms.map((p) => `
   });
 
   // Modal handling
-  if (elements.submitAppBtn && elements.modal && elements.closeModal) {
-    elements.submitAppBtn.addEventListener('click', () => {
+  if (elements.modal && elements.closeModal) {
+    const submitAppBtnDesktop = document.getElementById('submitAppBtnDesktop');
+    submitAppBtnDesktop?.addEventListener('click', () => {
       elements.modal?.classList.remove('hidden');
       elements.modal?.classList.add('flex');
     });
