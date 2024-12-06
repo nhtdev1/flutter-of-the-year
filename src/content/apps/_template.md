@@ -6,7 +6,7 @@ dateLaunched: "YYYY-MM-DD"
 images:
   - "../../assets/apps/example-1.png"
   - "../../assets/apps/example-2.png"
-  -  "../../assets/apps/example-3.png"
+  - "../../assets/apps/example-3.png"
 platforms:
   - name: "Android"
     url: "https://play.google.com/store/apps/details?id=com.example"
@@ -21,18 +21,3 @@ platforms:
   - name: "Linux"
     url: "https://flathub.org/apps/com.example.app"
 ---
-
-## Problem the App Solves
-
-Describe the problem or pain point that your app addresses. What challenges do users face that made you create this app?
-
-## How It Solves It
-
-Explain how your app solves the problem. What features and functionalities make it unique? How does it make users' lives easier?
-
-## Links
-
-- [Website](https://example.com)
-- [GitHub Repository](https://github.com/username/repo)
-- [X](https://x.com/username)
-- [Bluesky](https://bsky.app/profile/username)
