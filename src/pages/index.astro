@@ -409,7 +409,7 @@ platforms:${formData.platforms.map((p) => `
       document.body.appendChild(instructionsModal);
 
       const modalContent = document.createElement('div');
-      modalContent.className = 'bg-gray-900 rounded-xl p-8 max-w-3xl w-full mx-4 relative border border-white/10';
+      modalContent.className = 'bg-gray-900 rounded-xl p-8 max-w-3xl w-full mx-4 relative border border-white/10 max-h-screen overflow-auto';
       modalContent.innerHTML = `
         <h2 class="text-2xl font-bold mb-6 text-white">Submit Your App - Next Steps</h2>
         <div class="prose prose-invert">
