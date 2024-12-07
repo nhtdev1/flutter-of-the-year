@@ -132,8 +132,8 @@ const sortedApps = allApps.sort((a, b) => {
                 <div class="overflow-x-auto scrollbar-hide snap-x snap-mandatory flex gap-4 h-96">
                   {app.data.images ? (
                     app.data.images.map((image, idx) => (
-                      <div class="flex-none w-48 h-full snap-center">
-                        <div class="h-full rounded-lg overflow-hidden shadow-lg ring-4 ring-purple-500/30">
+                      <div class="flex-none w-48 h-full snap-center shadow-lg">
+                        <div class="h-full rounded-lg overflow-hidden">
                           <Image 
                             src={image}
                             alt={`${app.data.name} screenshot ${idx + 1}`}
