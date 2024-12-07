@@ -8,5 +8,5 @@ images:
   - "../../assets/apps/sharedexpense-2.png"
   - "../../assets/apps/sharedexpense-3.png"
   - "../../assets/apps/sharedexpense-4.png"
-platforms:
+platforms: "https://play.google.com/store/apps/details?id=com.cchamikara.sharedexpense&pcampaignid=web_share"
 ---
