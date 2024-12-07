@@ -10,5 +10,5 @@ images:
   - "../../assets/apps/sharedexpense-4.png"
 platforms:
   - name: "Android"
-    URL: "https://play.google.com/store/apps/details?id=com.cchamikara.sharedexpense&pcampaignid=web_share"
+    url: "https://play.google.com/store/apps/details?id=com.cchamikara.sharedexpense"
 ---
