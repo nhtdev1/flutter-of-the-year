@@ -69,18 +69,24 @@ jobs:
             # Use the first changed file
             CHANGED_FILE=$(echo "$CHANGED_FILES" | head -n 1)
             
-            # Extract app name and check if it exists in votes file
-            NAME=$(grep -m 1 '^name: ' "$CHANGED_FILE" | sed -E 's/^name: "(.+)"$/\1/')
+            # Extract metadata using more robust patterns
+            NAME=$(awk '/^name: / {gsub(/"/, "", $2); print $2}' "$CHANGED_FILE")
+            AUTHOR=$(awk '/^author: / {gsub(/"/, "", $2); print $2}' "$CHANGED_FILE")
+            
+            # Extract description - handling multi-line content between description: and dateLaunched:
+            DESCRIPTION=$(awk '/^description: /{p=1;next} /^dateLaunched:/{p=0} p' "$CHANGED_FILE" | \
+                         sed 's/^"//;s/"$//;s/^[[:space:]]*//')
+            
+            # Debug output
+            echo "Extracted Name: $NAME"
+            echo "Extracted Author: $AUTHOR"
+            echo "Extracted Description: $DESCRIPTION"
             
             # Check if app already has a discussion by looking in votes file
             if grep -q "\"$NAME\":" src/data/votes_*.json; then
               echo "Discussion already exists for $NAME"
               exit 0
             fi
-            
-            # Continue with existing code for new apps only...
-            AUTHOR=$(grep -m 1 '^author: ' "$CHANGED_FILE" | sed -E 's/^author: "(.+)"$/\1/')
-            DESCRIPTION=$(grep -m 1 '^description: ' "$CHANGED_FILE" | sed -E 's/^description: "(.+)"$/\1/')
             
             # Verify we got all required data
             if [ -z "$NAME" ] || [ -z "$AUTHOR" ] || [ -z "$DESCRIPTION" ]; then
