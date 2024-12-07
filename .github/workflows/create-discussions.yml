@@ -36,38 +36,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # Fetch at least 2 commits to have history
+          fetch-depth: 0 # Fetch all history
+          ref: ${{ github.event.pull_request.head.sha }} # Explicitly checkout the PR head
 
       - name: Get App Data
         id: app-data
         run: |
+          # Debug git status
+          git status
+          echo "Current SHA: $(git rev-parse HEAD)"
+
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             # For manual triggers, use the input parameters
             echo "name=${{ inputs.name }}" >> $GITHUB_OUTPUT
             echo "author=${{ inputs.author }}" >> $GITHUB_OUTPUT
             echo "description=${{ inputs.description }}" >> $GITHUB_OUTPUT
           else
-            # Debug information
-            echo "Base SHA: ${{ github.event.pull_request.base.sha }}"
-            echo "Head SHA: ${{ github.event.pull_request.head.sha }}"
-            echo "Changed files:"
-            git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
-            
-            # For push events, get the changed files
+            # Get the files changed in this PR
             CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/content/apps/.*\.md$' || true)
             
-            # Debug the result
-            echo "Matching MD files:"
+            echo "Found changed files:"
             echo "$CHANGED_FILES"
             
-            # Check if we found any changed files
             if [ -z "$CHANGED_FILES" ]; then
               echo "No relevant files changed"
               exit 0
             fi
             
-            # Use the first changed file
+            # Verify file exists and show contents
             CHANGED_FILE=$(echo "$CHANGED_FILES" | head -n 1)
+            echo "Processing file: $CHANGED_FILE"
+            echo "File contents:"
+            cat "$CHANGED_FILE"
             
             # Extract metadata using more robust patterns
             NAME=$(awk '/^name: / {gsub(/"/, "", $2); print $2}' "$CHANGED_FILE")
