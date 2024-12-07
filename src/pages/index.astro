@@ -165,12 +165,12 @@ const sortedApps = allApps.sort((a, b) => {
                   </div>
                 </div>
                 
-                <div class="flex items-center justify-center gap-3">
+                <div class="flex items-stretch justify-center gap-3">
                   <a 
                     href={`https://github.com${votes.default[app.data.name]?.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1 bg-orange-500/10 rounded-lg border border-orange-400/20"
+                    class="inline-flex items-center justify-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 bg-orange-500/10 rounded-lg border border-orange-400/20"
                   >
                     <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -178,45 +178,47 @@ const sortedApps = allApps.sort((a, b) => {
                     <span class="text-lg font-medium">Upvote</span>
                   </a>
 
-                  <a 
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Vote for ${app.data.name} by ${app.data.author} for The Best Flutter app of 2024\n\nhttps://flutteroftheyear.com`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300  transition-all group px-3 py-1 bg-blue-500/10 rounded-lg border border-blue-400/20"
-                    title="Share on X (Twitter)"
-                  >
-                    <span class="text-lg font-medium ">Help win on</span>
-                    <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                  </a>
+                  <div class="flex flex-col gap-2">
+                    <a 
+                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Vote for ${app.data.name} by ${app.data.author} for The Best Flutter app of 2024\n\nhttps://flutteroftheyear.com`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300  transition-all group px-3 py-1 bg-blue-500/10 rounded-lg border border-blue-400/20"
+                      title="Share on X (Twitter)"
+                    >
+                      <span class="text-lg font-medium ">Help win on</span>
+                      <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </a>
 
-                  <button 
-                    onclick={`
-                      const text = 'Vote for ${app.data.name} by ${app.data.author} for The Best Flutter app of 2024\\n\\nhttps://flutteroftheyear.com';
-                      navigator.clipboard.writeText(text);
-                      const popup = document.createElement('div');
-                      popup.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-xl shadow-xl z-50 flex items-center gap-3 scale-110 animate-fade-in';
-                      popup.innerHTML = \`
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span class="text-lg font-medium">Copied to clipboard! Paste it on your favorite social platform</span>
-                      \`;
-                      document.body.appendChild(popup);
-                      setTimeout(() => {
-                        popup.classList.add('animate-fade-out');
-                        setTimeout(() => popup.remove(), 300);
-                      }, 2000);
-                    `}
-                    class="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-all group px-3 py-1 bg-purple-500/10 rounded-lg border border-purple-400/20"
-                    title="Share"
-                  >
-                    <span class="text-lg font-medium ">Other</span>
-                    <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                    </svg>
-                  </button>
+                    <button 
+                      onclick={`
+                        const text = 'Vote for ${app.data.name} by ${app.data.author} for The Best Flutter app of 2024\\n\\nhttps://flutteroftheyear.com';
+                        navigator.clipboard.writeText(text);
+                        const popup = document.createElement('div');
+                        popup.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-xl shadow-xl z-50 flex items-center gap-3 scale-110 animate-fade-in';
+                        popup.innerHTML = \`
+                          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span class="text-lg font-medium">Copied to clipboard! Paste it on your favorite social platform</span>
+                        \`;
+                        document.body.appendChild(popup);
+                        setTimeout(() => {
+                          popup.classList.add('animate-fade-out');
+                          setTimeout(() => popup.remove(), 300);
+                        }, 2000);
+                      `}
+                      class="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-all group px-3 py-1 bg-purple-500/10 rounded-lg border border-purple-400/20"
+                      title="Share"
+                    >
+                      <span class="text-lg font-medium ">Other</span>
+                      <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
 
