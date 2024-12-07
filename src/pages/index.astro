@@ -59,7 +59,7 @@ const sortedApps = allApps.sort((a, b) => {
           >
             The Best Flutter Apps of {currentYear}<span class="inline-block animate-sparkle">✨</span>
           </h1>
-          <a href="https://hungrimind.com/learn/flutter?utm_source=flutter_of_the_year&utm_medium=website" class="text-neutral-400 hover:text-neutral-300 transition-colors">
+          <a href="https://hungrimind.com/learn/flutter?utm_source=flutter_of_the_year&utm_medium=website" class="text-neutral-400 text-xl hover:text-neutral-300 transition-colors">
             Sponsored by <b class="text-neutral-200 hover:text-white transition-colors font-bold">Hungrimind</b>  
             </a>
           <p class="text-lg text-blue-200/80 max-w-3xl mx-auto mt-16 mb-8">
@@ -175,17 +175,33 @@ const sortedApps = allApps.sort((a, b) => {
                   <h2 class="text-xl font-bold">{app.data.name}</h2>
                   <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
                 </div>
-                <a 
-                  href={`https://github.com${votes.default[app.data.name]?.slug}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1"
-                >
-                  <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="text-lg font-medium">{votes.default[app.data.name]?.votes}</span>
-                </a>
+                
+                <div class="flex items-center justify-center gap-3">
+                  <a 
+                    href={`https://github.com${votes.default[app.data.name]?.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 py-1 bg-orange-500/10 rounded-lg border border-orange-400/20"
+                  >
+                    <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="text-lg font-medium">{votes.default[app.data.name]?.votes}</span>
+                  </a>
+
+                  <a 
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Vote for ${app.data.name} by ${app.data.author} for The Best Flutter app of 2024\n\nhttps://flutteroftheyear.com`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-all group px-3 py-1 bg-blue-500/10 rounded-lg border border-blue-400/20"
+                    title="Share on X (Twitter)"
+                  >
+                    <span class="text-lg font-medium">Help this app win</span>
+                    <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
 
               <!-- App Description -->
