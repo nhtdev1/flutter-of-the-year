@@ -35,6 +35,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # Fetch at least 2 commits to have history
 
       - name: Get App Data
         id: app-data
@@ -45,8 +47,18 @@ jobs:
             echo "author=${{ inputs.author }}" >> $GITHUB_OUTPUT
             echo "description=${{ inputs.description }}" >> $GITHUB_OUTPUT
           else
+            # Debug information
+            echo "Base SHA: ${{ github.event.pull_request.base.sha }}"
+            echo "Head SHA: ${{ github.event.pull_request.head.sha }}"
+            echo "Changed files:"
+            git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
+            
             # For push events, get the changed files
-            CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | grep '^src/content/apps/.*\.md$' || true)
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/content/apps/.*\.md$' || true)
+            
+            # Debug the result
+            echo "Matching MD files:"
+            echo "$CHANGED_FILES"
             
             # Check if we found any changed files
             if [ -z "$CHANGED_FILES" ]; then
