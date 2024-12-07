@@ -2,7 +2,7 @@ name: Update Vote Counts
 
 on:
   schedule:
-    - cron: "*/30 * * *" # Run every 30 minutes
+    - cron: "0 */1 * * *" # Run every 6 hours
   workflow_dispatch: # Allow manual triggers
   # push:
   #   branches:
