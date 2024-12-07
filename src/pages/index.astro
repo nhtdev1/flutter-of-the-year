@@ -99,7 +99,7 @@ const sortedApps = allApps.sort((a, b) => {
       <h2 class="text-2xl text-center font-bold mb-8">Vote for your Favorite Apps 👇</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        {sortedApps.map((app) => (
+        {sortedApps.map((app, index) => (
           <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
             <div class="p-6">
               <!-- App Screenshots -->
@@ -146,10 +146,23 @@ const sortedApps = allApps.sort((a, b) => {
               </div>
 
               <!-- App Info -->
-              <div class="text-center space-y-3 mb-4">
-                <div>
-                  <h2 class="text-xl font-bold">{app.data.name}</h2>
-                  <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
+              <div class="text-start space-y-3 mb-4">
+                <div class="flex items-center justify-between gap-2 px-4 pb-4">
+                  <div class="flex items-center gap-4">
+                  
+                    <div>
+                      <h2 class="text-xl font-bold">#{index + 1} - {app.data.name}</h2>
+                      <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
+                    </div>
+                  </div>
+                  <div class="px-4 py-2 font-medium text-orange-400 rounded-full flex items-center gap-2">
+                    <div class="flex flex-col items-center">
+                      <span class="text-2xl font-bold">
+                        {votes.default[app.data.name]?.votes || 0}
+                      </span>
+                      <span class="text-xs text-center text-orange-400/70">current votes</span>
+                    </div>
+                  </div>
                 </div>
                 
                 <div class="flex items-center justify-center gap-3">
@@ -162,7 +175,7 @@ const sortedApps = allApps.sort((a, b) => {
                     <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span class="text-lg font-medium">{votes.default[app.data.name]?.votes}</span>
+                    <span class="text-lg font-medium">Upvote</span>
                   </a>
 
                   <a 
@@ -208,7 +221,7 @@ const sortedApps = allApps.sort((a, b) => {
               </div>
 
               <!-- App Description -->
-              <p class="text-gray-300 text-sm mb-6 text-center">{app.data.description}</p>
+              <p class="text-gray-300 text-sm mb-6 px-4 pt-4">{app.data.description}</p>
 
               <!-- App Links -->
               <div class="flex justify-center gap-4">
