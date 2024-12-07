@@ -1,12 +1,12 @@
 name: Create GitHub Discussions
 
 on:
-  # pull_request:
-  #   types: [closed]
-  #   branches:
-  #     - main
-  #   paths:
-  #     - "src/content/apps/**"
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - "src/content/apps/**"
   workflow_dispatch:
     inputs:
       name:
