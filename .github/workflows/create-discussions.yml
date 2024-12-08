@@ -1,8 +1,7 @@
 name: Create GitHub Discussions
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
     paths:
@@ -38,9 +37,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main # Explicitly checkout main branch
-          fetch-depth: 0 # Fetch all history
 
-      - name: Get App Data
+      - name: Get App Dataf
         id: app-data
         run: |
           # Debug git status
