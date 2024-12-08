@@ -1,11 +1,11 @@
 {
+  "ScholArxiv": {
+    "slug": "/hungrimind/flutter-of-the-year/discussions/36",
+    "votes": 74
+  },
   "Firebase FCM Notification": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/29",
     "votes": 5
-  },
-  "ScholArxiv": {
-    "slug": "/hungrimind/flutter-of-the-year/discussions/36",
-    "votes": 66
   },
   "Good News Bible": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/45",
@@ -13,11 +13,11 @@
   },
   "HabitKit": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/4",
-    "votes": 20
+    "votes": 21
   },
   "OpenNutriTracker": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/41",
-    "votes": 0
+    "votes": 1
   },
   "Plant AI - Leaf Identification": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/37",
