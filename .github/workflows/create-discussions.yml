@@ -1,6 +1,12 @@
 name: Create GitHub Discussions
 
 on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - "src/content/apps/**"
   workflow_dispatch:
     inputs:
       name:
@@ -18,26 +24,21 @@ on:
 
 jobs:
   create-discussion:
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    if: >
+      github.event_name == 'workflow_dispatch' || 
+      (github.event_name == 'pull_request' && 
+       github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
+    permissions:
+      discussions: write
+      pull-requests: read
+      contents: read
+      repository-projects: read
     steps:
-      - name: Debug Event
-        run: |
-          echo "Event name: ${{ github.event_name }}"
-          echo "Event path: ${{ github.event_path }}"
-          echo "Ref: ${{ github.ref }}"
-
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - name: Check Changed Files
-        run: |
-          echo "Changed files:"
-          git diff --name-only ${{ github.event.before }} ${{ github.event.after }} || true
-          echo "---"
-          echo "Files in apps directory:"
-          ls -la src/content/apps/ || true
+          ref: main # Explicitly checkout main branch
+          fetch-depth: 0 # Fetch all history
 
       - name: Get App Dataf
         id: app-data
@@ -101,19 +102,6 @@ jobs:
           fi
           echo "year=$(date +%Y)" >> $GITHUB_OUTPUT
 
-      - name: Debug Secrets
-        run: |
-          if [ -n "${{ secrets.REPO_ID }}" ]; then
-            echo "REPO_ID is set"
-          else
-            echo "REPO_ID is not set"
-          fi
-          if [ -n "${{ secrets.CAT_ID }}" ]; then
-            echo "CAT_ID is set"
-          else
-            echo "CAT_ID is not set"
-          fi
-
       - name: Create Discussion
         uses: abirismyname/create-discussion@v1.2.0
         with:
@@ -122,7 +110,6 @@ jobs:
             **Vote for this app by giving it an upvote!**
 
             ${{ steps.app-data.outputs.description }}
-          repository-id: ${{ secrets.REPO_ID }}
-          category-id: ${{ secrets.CAT_ID }}
-        env:
+          repository-id: R_kgDONX26mg
+          category-id: DIC_kwDONX26ms4Ck8X2
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
