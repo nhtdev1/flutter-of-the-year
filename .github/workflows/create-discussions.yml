@@ -112,4 +112,5 @@ jobs:
             ${{ steps.app-data.outputs.description }}
           repository-id: R_kgDONX26mg
           category-id: DIC_kwDONX26ms4Ck8X2
+        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
