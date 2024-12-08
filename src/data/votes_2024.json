@@ -1,4 +1,8 @@
 {
+  "SharedExpense": {
+    "slug": "/hungrimind/flutter-of-the-year/discussions/15",
+    "votes": 0
+  },
   "Destination App": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/27",
     "votes": 1
@@ -22,10 +26,6 @@
   "Buck The Critics": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/18",
     "votes": 2
-  },
-  "SharedExpense": {
-    "slug": "/hungrimind/flutter-of-the-year/discussions/15",
-    "votes": 0
   },
   "Mindmatch": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/13",
