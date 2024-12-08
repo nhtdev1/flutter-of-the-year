@@ -33,6 +33,7 @@ jobs:
       discussions: write
       pull-requests: read
       contents: read
+      repository-projects: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -100,6 +101,19 @@ jobs:
             echo "description=$DESCRIPTION" >> $GITHUB_OUTPUT
           fi
           echo "year=$(date +%Y)" >> $GITHUB_OUTPUT
+
+      - name: Debug Secrets
+        run: |
+          if [ -n "${{ secrets.REPO_ID }}" ]; then
+            echo "REPO_ID is set"
+          else
+            echo "REPO_ID is not set"
+          fi
+          if [ -n "${{ secrets.CAT_ID }}" ]; then
+            echo "CAT_ID is set"
+          else
+            echo "CAT_ID is not set"
+          fi
 
       - name: Create Discussion
         uses: abirismyname/create-discussion@v1.2.0

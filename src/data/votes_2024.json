@@ -1,7 +1,11 @@
 {
+  "Futoshiki": {
+    "slug": "/hungrimind/flutter-of-the-year/discussions/32",
+    "votes": 0
+  },
   "Firebase FCM Notification": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/29",
-    "votes": 1
+    "votes": 4
   },
   "SharedExpense": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/15",
@@ -9,7 +13,7 @@
   },
   "Destination App": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/27",
-    "votes": 1
+    "votes": 2
   },
   "HelloBand": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/25",
@@ -21,11 +25,11 @@
   },
   "Mirarr": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/21",
-    "votes": 3
+    "votes": 4
   },
   "Keepin": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/19",
-    "votes": 1
+    "votes": 3
   },
   "Buck The Critics": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/18",
@@ -45,7 +49,7 @@
   },
   "HabitKit": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/4",
-    "votes": 10
+    "votes": 12
   },
   "Today": {
     "slug": "/hungrimind/flutter-of-the-year/discussions/1",
