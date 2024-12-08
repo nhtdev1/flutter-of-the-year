@@ -23,20 +23,26 @@ on:
 
 jobs:
   create-discussion:
-    if: >
-      github.event_name == 'workflow_dispatch' || 
-      (github.event_name == 'pull_request' && 
-       github.event.pull_request.merged == true)
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
-    permissions:
-      discussions: write
-      pull-requests: read
-      contents: read
-      repository-projects: read
     steps:
+      - name: Debug Event
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Event path: ${{ github.event_path }}"
+          echo "Ref: ${{ github.ref }}"
+
       - uses: actions/checkout@v4
         with:
-          ref: main # Explicitly checkout main branch
+          fetch-depth: 0
+
+      - name: Check Changed Files
+        run: |
+          echo "Changed files:"
+          git diff --name-only ${{ github.event.before }} ${{ github.event.after }} || true
+          echo "---"
+          echo "Files in apps directory:"
+          ls -la src/content/apps/ || true
 
       - name: Get App Dataf
         id: app-data
