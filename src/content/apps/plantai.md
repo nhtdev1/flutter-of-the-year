@@ -1,5 +1,5 @@
 ---
-name: "Plant AI: Leaf Identification"
+name: "Plant AI - Leaf Identification"
 author: "Cristian Canales"
 description: "Instant Plant Identification: Take a photo or upload an image to quickly and accurately identify plants.
 
