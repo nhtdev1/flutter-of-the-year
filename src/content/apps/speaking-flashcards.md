@@ -1,3 +1,4 @@
+---
 name: "Speaking Flashcards"
 author: "David Dales"
 description: "Speech-in/speech-out flashcard app. Great for studying languages!
@@ -13,3 +14,4 @@ platforms:
     url: "https://play.google.com/store/apps/details?id=com.speaking_flashcards.abc&hl=en_CA"
   - name: "iOS"
     url: "https://apps.apple.com/ca/app/speaking-flashcards/id6670759263"
+---
