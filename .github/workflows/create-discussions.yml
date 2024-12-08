@@ -37,8 +37,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main # Explicitly checkout main branch
           fetch-depth: 0 # Fetch all history
-          ref: ${{ github.event.pull_request.head.sha }} # Explicitly checkout the PR head
 
       - name: Get App Data
         id: app-data
