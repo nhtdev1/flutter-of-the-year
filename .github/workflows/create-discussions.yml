@@ -102,14 +102,25 @@ jobs:
           echo "year=$(date +%Y)" >> $GITHUB_OUTPUT
 
       - name: Create Discussion
-        uses: abirismyname/create-discussion@v1.2.0
+        uses: octokit/request-action@v2.x
+        id: create_discussion
         with:
-          title: "Vote 2024: ${{ steps.app-data.outputs.name }} by ${{ steps.app-data.outputs.author }}"
+          route: POST /graphql
+          query: |
+            mutation createDiscussion($repositoryId: ID!, $categoryId: ID!, $title: String!, $body: String!) {
+              createDiscussion(input: {repositoryId: $repositoryId, categoryId: $categoryId, title: $title, body: $body}) {
+                discussion {
+                  id
+                  url
+                }
+              }
+            }
+          repositoryId: ${{ secrets.REPO_ID }}
+          categoryId: ${{ secrets.CAT_ID }}
+          title: "Vote ${{ steps.app-data.outputs.year }}: ${{ steps.app-data.outputs.name }} by ${{ steps.app-data.outputs.author }}"
           body: |
             **Vote for this app by giving it an upvote!**
 
             ${{ steps.app-data.outputs.description }}
-          repository-id: ${{ secrets.REPO_ID }}
-          category-id: ${{ secrets.CAT_ID }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
