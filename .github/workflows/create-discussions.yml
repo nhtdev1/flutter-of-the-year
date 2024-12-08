@@ -1,11 +1,6 @@
 name: Create GitHub Discussions
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "src/content/apps/**"
   workflow_dispatch:
     inputs:
       name:
