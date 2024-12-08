@@ -63,30 +63,24 @@ jobs:
               exit 0
             fi
             
-            # Verify file exists and show contents
+            # Use the first changed file
             CHANGED_FILE=$(echo "$CHANGED_FILES" | head -n 1)
             echo "Processing file: $CHANGED_FILE"
             echo "File contents:"
             cat "$CHANGED_FILE"
             
-            # Extract metadata using more robust patterns
-            NAME=$(awk '/^name: / {gsub(/"/, "", $2); print $2}' "$CHANGED_FILE")
-            AUTHOR=$(awk '/^author: / {gsub(/"/, "", $2); print $2}' "$CHANGED_FILE")
+            # Extract metadata using yq or manual parsing
+            NAME=$(grep '^name: ' "$CHANGED_FILE" | cut -d'"' -f2)
+            AUTHOR=$(grep '^author: ' "$CHANGED_FILE" | cut -d'"' -f2)
             
-            # Extract description - handling multi-line content between description: and dateLaunched:
-            DESCRIPTION=$(awk '/^description: /{p=1;next} /^dateLaunched:/{p=0} p' "$CHANGED_FILE" | \
-                         sed 's/^"//;s/"$//;s/^[[:space:]]*//')
+            # Extract description - capture everything between the quotes
+            DESCRIPTION=$(sed -n '/^description: /,/dateLaunched:/p' "$CHANGED_FILE" | \
+                         sed '1s/^description: "//;$s/dateLaunched.*//;s/"$//' | \
+                         tr '\n' ' ' | sed 's/  */ /g')
             
-            # Debug output
-            echo "Extracted Name: $NAME"
+            echo "---Extracted Name: $NAME"
             echo "Extracted Author: $AUTHOR"
             echo "Extracted Description: $DESCRIPTION"
-            
-            # Check if app already has a discussion by looking in votes file
-            if grep -q "\"$NAME\":" src/data/votes_*.json; then
-              echo "Discussion already exists for $NAME"
-              exit 0
-            fi
             
             # Verify we got all required data
             if [ -z "$NAME" ] || [ -z "$AUTHOR" ] || [ -z "$DESCRIPTION" ]; then
@@ -94,17 +88,13 @@ jobs:
               exit 1
             fi
             
-            # Properly escape the values for GitHub Actions output
-            NAME="${NAME//'%'/'%25'}"
-            NAME="${NAME//$'\n'/'%0A'}"
-            NAME="${NAME//$'\r'/'%0D'}"
-            AUTHOR="${AUTHOR//'%'/'%25'}"
-            AUTHOR="${AUTHOR//$'\n'/'%0A'}"
-            AUTHOR="${AUTHOR//$'\r'/'%0D'}"
-            DESCRIPTION="${DESCRIPTION//'%'/'%25'}"
-            DESCRIPTION="${DESCRIPTION//$'\n'/'%0A'}"
-            DESCRIPTION="${DESCRIPTION//$'\r'/'%0D'}"
+            # Check if app already has a discussion by looking in votes file
+            if grep -q "\"$NAME\":" src/data/votes_*.json; then
+              echo "Discussion already exists for $NAME"
+              exit 0
+            fi
             
+            # Set outputs
             echo "name=$NAME" >> $GITHUB_OUTPUT
             echo "author=$AUTHOR" >> $GITHUB_OUTPUT
             echo "description=$DESCRIPTION" >> $GITHUB_OUTPUT
@@ -114,7 +104,7 @@ jobs:
       - name: Create Discussion
         uses: abirismyname/create-discussion@v1.2.0
         with:
-          title: "Vote ${{ steps.app-data.outputs.year }}: ${{ steps.app-data.outputs.name }} by ${{ steps.app-data.outputs.author }}"
+          title: "Vote 2024: ${{ steps.app-data.outputs.name }} by ${{ steps.app-data.outputs.author }}"
           body: |
             **Vote for this app by giving it an upvote!**
 
