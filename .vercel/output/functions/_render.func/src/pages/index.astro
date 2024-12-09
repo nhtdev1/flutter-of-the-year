@@ -1,0 +1,811 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { getVotes, type VoteData } from '../utils/votes';
+
+const currentYear = new Date().getFullYear();
+const allApps = await getCollection('apps');
+const votes: VoteData = getVotes();
+
+// Sort apps by vote count (descending)
+const sortedApps = allApps.sort((a, b) => {
+  const votesA = votes.default[a.data.name]?.votes || 0;
+  const votesB = votes.default[b.data.name]?.votes || 0;
+  return votesB - votesA;
+});
+---
+
+<Layout>
+  <main class="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white">
+ 
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+      <div class="absolute inset-0">
+        <div
+          class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTJ2Mmgydi0yem0tMjAgMGgydjJoLTJ2LTJ6bTIwLTIwdi0yaDJ2MmgtMnptLTIwIDBoMnYyaC0ydi0yeiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"
+        >
+        </div>
+      </div>
+      <div class="container mx-auto px-4 pb-24 relative">
+        <div class="text-center max-w-4xl mx-auto">
+          <h1
+            class="text-6xl font-bold mt-16 mb-4 text-white"
+          >
+            The Best Flutter Apps of {currentYear}<span class="inline-block animate-sparkle">✨</span>
+          </h1>
+          <a href="https://hungrimind.com/learn/flutter?utm_source=flutter_of_the_year&utm_medium=website" class="text-neutral-400 text-xl hover:text-neutral-300 transition-colors">
+            Sponsored by <b class="text-neutral-200 hover:text-white transition-colors font-bold">Hungrimind</b>  
+            </a>
+          <p class="text-lg text-blue-200/80 max-w-3xl mx-auto mt-16 mb-8">
+            Vote for your favorite Flutter apps or submit your own app to be featured in this year's collection. <strong>Every vote counts</strong>, and you can vote for multiple apps that impress you!
+          </p>
+
+          <div class="flex flex-col items-center gap-2 mb-16">
+            <p class="text-sm text-blue-200/60">Time left to submit and vote</p>
+            <div class="flex gap-4 text-center">
+              <div class="w-20">
+                <div class="text-2xl font-bold" id="days">--</div>
+                <div class="text-xs text-blue-200/60 uppercase tracking-wider">Days</div>
+              </div>
+              <div class="w-20">
+                <div class="text-2xl font-bold" id="hours">--</div>
+                <div class="text-xs text-blue-200/60 uppercase tracking-wider">Hours</div>
+              </div>
+              <div class="w-20">
+                <div class="text-2xl font-bold" id="minutes">--</div>
+                <div class="text-xs text-blue-200/60 uppercase tracking-wider">Minutes</div>
+              </div>
+              <div class="w-20">
+                <div class="text-2xl font-bold" id="seconds">--</div>
+                <div class="text-xs text-blue-200/60 uppercase tracking-wider">Seconds</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit CTA -->
+          <div class="max-w-xl mx-auto mb-8">
+            <div
+              class="bg-white/5 backdrop-blur-lg rounded-xl p-5 border border-white/10 hover:bg-white/10 transition-colors duration-300"
+            >
+              <h2 class="text-lg font-bold mb-2">Built Something Amazing?</h2>
+              <p class="text-blue-200 text-sm mb-3">
+                Share your Flutter app with the community and showcase your work in the Flutter of the
+                Year collection!
+              </p>
+              <a
+                href="https://github.com/hungrimind/flutter-of-the-year"
+                id="submitAppBtn"
+                class="md:hidden inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                Submit Your App
+              </a>
+              <a
+                href="#"
+                id="submitAppBtnDesktop"
+                class="hidden md:inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                Submit Your App
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apps Grid -->
+    <div class="container mx-auto px-4 py-8">
+      <h2 class="text-2xl text-center font-bold mb-8">Vote for your Favorite Apps 👇</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {sortedApps.map((app, index) => (
+          <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden border border-white/20">
+            <div class="p-6">
+              <!-- App Screenshots -->
+              <!-- App Screenshots Carousel -->
+              <div class="relative w-full mx-auto mb-6">
+                <div class="overflow-x-auto scrollbar-hide snap-x snap-mandatory flex gap-4 h-96">
+                  {app.data.images ? (
+                    app.data.images.map((image, idx) => (
+                      <div class="flex-none w-48 h-full snap-center shadow-lg">
+                        <div class="h-full rounded-lg overflow-hidden">
+                          <Image 
+                            src={image}
+                            alt={`${app.data.name} screenshot ${idx + 1}`}
+                            width={400}
+                            height={711}
+                            class="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div class="flex-none w-48 h-full snap-center">
+                      <div class="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400 text-sm text-center px-2 rounded-lg">
+                        Mobile Screenshot Required (9:16)
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <!-- Image Indicators -->
+                {app.data.images && app.data.images.length > 1 && (
+                  <div class="flex justify-center gap-1.5 mt-4">
+                    {app.data.images.map((_, index) => (
+                      <button 
+                        class="w-2 h-2 rounded-full bg-white/50 hover:bg-white/70 transition-colors"
+                        onclick={`this.parentElement.parentElement.querySelector('.overflow-x-auto').scrollTo({
+                          left: ${index * 192}, 
+                          behavior: 'smooth'
+                        })`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <!-- App Info -->
+              <div class="text-start space-y-3 mb-4">
+                <div class="flex items-center justify-between gap-2 px-4 pb-4">
+                  <div class="flex items-center gap-4">
+                  
+                    <div>
+                      <h2 class="text-xl font-bold">#{index + 1} - {app.data.name}</h2>
+                      <p class="text-blue-200 text-sm mt-1">by {app.data.author}</p>
+                    </div>
+                  </div>
+                  <div class="px-4 py-2 font-medium text-orange-400 rounded-full flex items-center gap-2">
+                    <div class="flex flex-col items-center">
+                      <span class="text-2xl font-bold">
+                        {votes.default[app.data.name]?.votes || 0}
+                      </span>
+                      <span class="text-xs text-center text-orange-400/70">current votes</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex items-stretch justify-center gap-3">
+                  <a 
+                    href={`https://github.com${votes.default[app.data.name]?.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center gap-2 text-orange-400 hover:text-orange-300 transition-all group px-3 bg-orange-500/10 rounded-lg border border-orange-400/20"
+                  >
+                    <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="text-lg font-medium">Upvote</span>
+                  </a>
+
+                  <div class="flex flex-col gap-2">
+                    <a 
+                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Vote for ${app.data.name} by ${app.data.author} for The Best Flutter app of 2024\n\nhttps://flutteroftheyear.com`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300  transition-all group px-3 py-1 bg-blue-500/10 rounded-lg border border-blue-400/20"
+                      title="Share on X (Twitter)"
+                    >
+                      <span class="text-lg font-medium ">Help win on</span>
+                      <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </a>
+
+                    <button 
+                      onclick={`
+                        const text = 'Vote for ${app.data.name} by ${app.data.author} for The Best Flutter app of 2024\\n\\nhttps://flutteroftheyear.com';
+                        navigator.clipboard.writeText(text);
+                        const popup = document.createElement('div');
+                        popup.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-xl shadow-xl z-50 flex items-center gap-3 scale-110 animate-fade-in';
+                        popup.innerHTML = \`
+                          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span class="text-lg font-medium">Copied to clipboard! Paste it on your favorite social platform</span>
+                        \`;
+                        document.body.appendChild(popup);
+                        setTimeout(() => {
+                          popup.classList.add('animate-fade-out');
+                          setTimeout(() => popup.remove(), 300);
+                        }, 2000);
+                      `}
+                      class="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-all group px-3 py-1 bg-purple-500/10 rounded-lg border border-purple-400/20"
+                      title="Share"
+                    >
+                      <span class="text-lg font-medium ">Other</span>
+                      <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- App Description -->
+              <p class="text-gray-300 text-sm mb-6 px-4 pt-4">{app.data.description}</p>
+
+              <!-- App Links -->
+              <div class="flex justify-center gap-4">
+                {app.data.platforms.map((platform) => (
+                  <a 
+                    href={platform.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-400 hover:text-blue-300 transition-colors px-3 py-1 border border-blue-400/30 rounded-full text-sm"
+                  >
+                    {platform.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="z-50 py-4 md:py-16">
+      <div class="flex justify-center px-4">
+      
+     
+
+         <a
+            href="https://hungrimind.com/learn/flutter?utm_source=flutter_of_the_year&utm_medium=website"
+          class="group bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-lg px-4 py-3 md:py-2 backdrop-blur-sm border border-white/10 w-full max-w-md md:max-w-4xl"
+        >
+          <div class="flex flex-col md:flex-row items-center gap-3 md:gap-4">
+            <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4 flex-1 text-center md:text-left">
+              <span class="text-white/90 text-sm md:text-base font-medium">Want to build your own Flutter app?</span>
+              <span class="text-white/70 hidden md:inline">·</span>
+              <span class="text-white/80 text-xs md:text-sm">Learn with The Best Flutter Course on the Internet</span>
+            </div>
+            <span
+              class="bg-gray-900/60 group-hover:bg-gray-900/80 text-white px-4 py-1.5 rounded-full text-sm font-medium transition-colors flex items-center gap-2 whitespace-nowrap mt-2 md:mt-0"
+            >
+              Start Learning
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+  </main>
+</Layout>
+
+<!-- Submission Modal -->
+<div id="submissionModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 overflow-y-auto py-8">
+  <div class="bg-gray-900 rounded-xl p-8 max-w-2xl w-full mx-4 relative border border-white/10 my-auto">
+    <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <h2 class="text-2xl font-bold mb-6 text-white">Submit Your Flutter App</h2>
+    <form id="appSubmissionForm" class="space-y-6">
+      <div>
+        <label for="appName" class="block text-sm font-medium text-gray-300 mb-1">App Name</label>
+        <input type="text" id="appName" required class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+      <div>
+        <label for="authorName" class="block text-sm font-medium text-gray-300 mb-1">Author Name</label>
+        <input type="text" id="authorName" required class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-300 mb-1">Description</label>
+        <textarea id="description" required rows="3" class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+      </div>
+      <div>
+        <label for="launchDate" class="block text-sm font-medium text-gray-300 mb-1">Launch Date</label>
+        <input type="date" id="launchDate" required class="w-full px-4 py-2 bg-gray-800 rounded-lg border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Platforms</label>
+        <div class="space-y-2">
+          <div class="flex items-center">
+            <input type="checkbox" id="android" class="mr-2">
+            <label for="android" class="text-gray-300">Android</label>
+            <input type="url" placeholder="Play Store URL" class="ml-4 flex-1 px-4 py-1 bg-gray-800 rounded-lg border border-gray-700 text-white text-sm">
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="ios" class="mr-2">
+            <label for="ios" class="text-gray-300">iOS</label>
+            <input type="url" placeholder="App Store URL" class="ml-4 flex-1 px-4 py-1 bg-gray-800 rounded-lg border border-gray-700 text-white text-sm">
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="web" class="mr-2">
+            <label for="web" class="text-gray-300">Web</label>
+            <input type="url" placeholder="Web URL" class="ml-4 flex-1 px-4 py-1 bg-gray-800 rounded-lg border border-gray-700 text-white text-sm">
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="linux" class="mr-2">
+            <label for="linux" class="text-gray-300">Linux</label>
+            <input type="url" placeholder="Linux Download URL" class="ml-4 flex-1 px-4 py-1 bg-gray-800 rounded-lg border border-gray-700 text-white text-sm">
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="macos" class="mr-2">
+            <label for="macos" class="text-gray-300">macOS</label>
+            <input type="url" placeholder="Mac App Store URL" class="ml-4 flex-1 px-4 py-1 bg-gray-800 rounded-lg border border-gray-700 text-white text-sm">
+          </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="windows" class="mr-2">
+            <label for="windows" class="text-gray-300">Windows</label>
+            <input type="url" placeholder="Microsoft Store URL" class="ml-4 flex-1 px-4 py-1 bg-gray-800 rounded-lg border border-gray-700 text-white text-sm">
+          </div>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Screenshots</label>
+        <div id="screenshotInputs" class="space-y-4">
+          <div class="border-2 border-dashed border-gray-700 rounded-lg p-6 text-center" id="dropZone">
+            <div class="space-y-2">
+              <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M28 8H12a4 4 0 013 3v1.5a1.5 1.5 0 013 0V6a3 3 0 116 0v7.5a1.5 1.5 0 01-3 0V6a3 3 0 00-3-3H6zm9.75 10.5a.75.75 0 00-1.5 0v4.94l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72v-4.94z"/>
+              </svg>
+              <div class="text-sm text-gray-400">
+                <p>Drag and drop images here, or</p>
+                <button type="button" class="text-blue-400 hover:text-blue-300" id="uploadButton">
+                  Click to upload
+                </button>
+                <input type="file" id="fileInput" class="hidden" accept="image/*" multiple>
+                <p class="mt-1">Or paste images directly (Ctrl+V/Cmd+V)</p>
+              </div>
+            </div>
+          </div>
+          <div id="imagePreviewContainer" class="grid grid-cols-2 gap-4"></div>
+        </div>
+      </div>
+      <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">
+        Create Pull Request
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Type declarations
+  interface UploadedImage {
+    preview: HTMLDivElement;
+    base64: string;
+    filename: string;
+  }
+
+  interface FormData {
+    name: string;
+    author: string;
+    description: string;
+    dateLaunched: string;
+    platforms: Platform[];
+    images: string[];
+  }
+
+  interface Platform {
+    name: string;
+    url: string;
+  }
+
+  interface FileInputEvent {
+    target: {
+      files: FileList | File[];
+    };
+  }
+
+  let uploadedImages: UploadedImage[] = [];
+
+  // Get DOM elements once
+  const elements = {
+    modal: document.getElementById('submissionModal') as HTMLDivElement | null,
+    closeModal: document.getElementById('closeModal') as HTMLButtonElement | null,
+    form: document.getElementById('appSubmissionForm') as HTMLFormElement | null,
+    screenshotInputs: document.getElementById('screenshotInputs') as HTMLDivElement | null,
+    dropZone: document.getElementById('dropZone') as HTMLDivElement | null,
+    fileInput: document.getElementById('fileInput') as HTMLInputElement | null,
+    uploadButton: document.getElementById('uploadButton') as HTMLButtonElement | null,
+    imagePreviewContainer: document.getElementById('imagePreviewContainer') as HTMLDivElement | null,
+    submitAppBtn: document.getElementById('submitAppBtn') as HTMLButtonElement | null,
+  };
+
+  // Form submission handling
+  elements.form?.addEventListener('submit', async (e: SubmitEvent) => {
+    e.preventDefault();
+    
+    const appNameInput = document.getElementById('appName') as HTMLInputElement | null;
+    const authorNameInput = document.getElementById('authorName') as HTMLInputElement | null;
+    const descriptionInput = document.getElementById('description') as HTMLTextAreaElement | null;
+    const launchDateInput = document.getElementById('launchDate') as HTMLInputElement | null;
+
+    if (!appNameInput || !authorNameInput || !descriptionInput || !launchDateInput) {
+      console.error('Required form inputs not found');
+      return;
+    }
+    
+    // Get form data
+    const formData: FormData = {
+      name: appNameInput.value,
+      author: authorNameInput.value,
+      description: descriptionInput.value,
+      dateLaunched: launchDateInput.value,
+      platforms: [],
+      images: []
+    };
+
+    // Get platform data
+    ['android', 'ios', 'web', 'linux', 'macos', 'windows'].forEach(platform => {
+      const checkbox = document.getElementById(platform) as HTMLInputElement | null;
+      if (!checkbox) return;
+      
+      const urlInput = checkbox.nextElementSibling?.nextElementSibling as HTMLInputElement | null;
+      if (checkbox.checked && urlInput?.value) {
+        const platformMap: Record<string, string> = {
+          'android': 'Android',
+          'ios': 'iOS',
+          'web': 'Web',
+          'linux': 'Linux',
+          'macos': 'macOS',
+          'windows': 'Windows'
+        };
+
+        formData.platforms.push({
+          name: platformMap[platform] || platform,
+          url: urlInput.value
+        });
+      }
+    });
+
+    try {
+      // Create file name for the app
+      const fileName = formData.name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      
+      // Create the markdown content
+      const markdownContent = `---
+name: "${formData.name}"
+author: "${formData.author}"
+description: "${formData.description}"
+dateLaunched: "${formData.dateLaunched}"
+images:${uploadedImages.map((_, index) => `
+  - "../../assets/apps/${fileName}-${index + 1}.png"`).join('')}
+platforms:${formData.platforms.map((p) => `
+  - name: "${p.name}"
+    url: "${p.url}"`).join('')}
+---`;
+
+      // Create instructions modal
+      const instructionsModal = document.createElement('div');
+      instructionsModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+      document.body.appendChild(instructionsModal);
+
+      const modalContent = document.createElement('div');
+      modalContent.className = 'bg-gray-900 rounded-xl p-8 max-w-3xl w-full mx-4 relative border border-white/10 max-h-screen overflow-auto';
+      modalContent.innerHTML = `
+        <h2 class="text-2xl font-bold mb-6 text-white">Submit Your App - Next Steps</h2>
+        <div class="prose prose-invert">
+          <p class="mb-4 text-gray-200">Thank you for submitting your app! Follow these steps to complete your submission:</p>
+          
+          <div class="space-y-6">
+            <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+              <h3 class="text-lg font-semibold mb-2 text-white">1. Fork the Repository</h3>
+              <p class="text-sm text-gray-300 mb-3">Create your own copy of the repository to make changes.</p>
+              <a href="https://github.com/hungrimind/flutter-of-the-year/fork" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 px-4 py-2 rounded-lg transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-4h2v2h-2v-2zm0-2h2V7h-2v7z"/>
+                </svg>
+                Fork Repository
+              </a>
+            </div>
+
+            <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+              <h3 class="text-lg font-semibold mb-2 text-white">2. Add Your Files</h3>
+              <p class="text-sm text-gray-300">In your forked repository:</p>
+              <ol class="list-decimal list-inside space-y-2 mt-2 text-sm text-gray-300">
+                <li>Create a new branch for your submission</li>
+                <li>Add your app's screenshots to the <code class="bg-gray-900/80 px-1.5 py-0.5 rounded text-gray-300">src/assets/apps</code> directory</li>
+                <li>Create a new file in <code class="bg-gray-900/80 px-1.5 py-0.5 rounded text-gray-300">src/content/apps</code> with this content:</li>
+              </ol>
+            </div>
+
+            <div class="bg-gray-900/80 p-4 rounded-lg mt-4 overflow-x-auto border border-gray-800">
+              <pre class="text-gray-300"><code>---
+name: "${formData.name}"
+author: "${formData.author}"
+description: "${formData.description}"
+dateLaunched: "${formData.dateLaunched}"
+images:${uploadedImages.map((_, index) => `
+  - "../../assets/apps/${fileName}-${index + 1}.png"`).join('')}
+platforms:${formData.platforms.map((p) => `
+  - name: "${p.name}"
+    url: "${p.url}"`).join('')}
+---</code></pre>
+            </div>
+
+            <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+              <h3 class="text-lg font-semibold mb-2 text-white">3. Create Pull Request</h3>
+              <p class="text-sm text-gray-300 mb-3">Submit your changes for review.</p>
+              <a href="https://github.com/hungrimind/flutter-of-the-year/compare" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 px-4 py-2 rounded-lg transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 3a3 3 0 013 3v1.5a1.5 1.5 0 013 0V6a3 3 0 116 0v7.5a1.5 1.5 0 01-3 0V6a3 3 0 00-3-3H6zm9.75 10.5a.75.75 0 00-1.5 0v4.94l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72v-4.94z"/>
+                </svg>
+                Create Pull Request
+              </a>
+            </div>
+          </div>
+        </div>
+        <button id="closeInstructionsModal" class="mt-6 w-full bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium py-2 px-4 rounded-lg transition-colors">
+          Close
+        </button>
+      `;
+      
+      instructionsModal.appendChild(modalContent);
+
+      const closeInstructionsModalBtn = modalContent.querySelector('#closeInstructionsModal');
+      closeInstructionsModalBtn?.addEventListener('click', () => {
+        instructionsModal.remove();
+      });
+
+    } catch (error) {
+      console.error('Error preparing submission:', error);
+      alert('There was an error preparing your submission. Please try again.');
+    }
+  });
+
+  // Handle file selection
+  if (elements.uploadButton && elements.fileInput) {
+    elements.uploadButton.addEventListener('click', () => {
+      elements.fileInput?.click();
+    });
+  }
+
+  // Handle file input change
+  elements.fileInput?.addEventListener('change', (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files) {
+      handleFiles({ target: { files: target.files } });
+    }
+  });
+
+  // Handle drag and drop
+  if (elements.dropZone) {
+    elements.dropZone.addEventListener('dragover', (e: DragEvent) => {
+      e.preventDefault();
+      elements.dropZone?.classList.add('border-blue-500');
+    });
+
+    elements.dropZone.addEventListener('dragleave', (e: DragEvent) => {
+      e.preventDefault();
+      elements.dropZone?.classList.remove('border-blue-500');
+    });
+
+    elements.dropZone.addEventListener('drop', (e: DragEvent) => {
+      e.preventDefault();
+      elements.dropZone?.classList.remove('border-blue-500');
+      const files = e.dataTransfer?.files ? Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/')) : [];
+      handleFiles({ target: { files } });
+    });
+  }
+
+  // Handle paste
+  document.addEventListener('paste', (e: ClipboardEvent) => {
+    if (!e.clipboardData) return;
+    const items = Array.from(e.clipboardData.items);
+    const imageItems = items.filter(item => item.type.startsWith('image/'));
+    
+    imageItems.forEach(item => {
+      const file = item.getAsFile();
+      if (file) {
+        handleFiles({ target: { files: [file] } });
+      }
+    });
+  });
+
+  async function handleFiles(e: FileInputEvent) {
+    if (!elements.imagePreviewContainer) {
+      console.error('Image preview container not found');
+      return;
+    }
+
+    const files = Array.from(e.target.files);
+    
+    for (const file of files) {
+      if (!file.type.startsWith('image/')) continue;
+
+      try {
+        // Create preview
+        const preview = document.createElement('div');
+        preview.className = 'relative group';
+        
+        const img = document.createElement('img');
+        img.className = 'w-full h-48 object-cover rounded-lg';
+        img.src = URL.createObjectURL(file);
+        
+        const removeButton = document.createElement('button');
+        removeButton.className = 'absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity';
+        removeButton.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        `;
+        
+        preview.appendChild(img);
+        preview.appendChild(removeButton);
+        elements.imagePreviewContainer.appendChild(preview);
+
+        // Convert image to base64
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event: ProgressEvent<FileReader>) => {
+          const result = event.target?.result;
+          if (typeof result !== 'string') {
+            console.error('Invalid file data');
+            return;
+          }
+          const base64Data = result.split(',')[1];
+          uploadedImages.push({
+            preview,
+            base64: base64Data,
+            filename: `${Date.now()}-${file.name}`
+          });
+        };
+
+        // Handle remove button
+        removeButton.addEventListener('click', () => {
+          preview.remove();
+          uploadedImages = uploadedImages.filter(img => img.preview !== preview);
+        });
+      } catch (error) {
+        console.error('Error handling file:', error);
+        alert('Error handling image. Please try again.');
+      }
+    }
+  }
+
+  function updateCountdown() {
+    const now = new Date();
+    const endOfYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59); // December 31st at 23:59:59
+    const diff = endOfYear.getTime() - now.getTime();
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const daysElement = document.getElementById('days');
+    const hoursElement = document.getElementById('hours');
+    const minutesElement = document.getElementById('minutes');
+    const secondsElement = document.getElementById('seconds');
+
+    if (daysElement) daysElement.textContent = String(days).padStart(2, '0');
+    if (hoursElement) hoursElement.textContent = String(hours).padStart(2, '0');
+    if (minutesElement) minutesElement.textContent = String(minutes).padStart(2, '0');
+    if (secondsElement) secondsElement.textContent = String(seconds).padStart(2, '0');
+  }
+
+  // Update immediately and then every second
+  updateCountdown();
+  const countdownInterval = setInterval(updateCountdown, 1000);
+
+  // Clean up interval on page unload
+  window.addEventListener('unload', () => {
+    clearInterval(countdownInterval);
+  });
+
+  // Modal handling
+  if (elements.modal && elements.closeModal) {
+    const submitAppBtnDesktop = document.getElementById('submitAppBtnDesktop');
+    submitAppBtnDesktop?.addEventListener('click', () => {
+      elements.modal?.classList.remove('hidden');
+      elements.modal?.classList.add('flex');
+    });
+
+    elements.closeModal.addEventListener('click', () => {
+      elements.modal?.classList.add('hidden');
+      elements.modal?.classList.remove('flex');
+      elements.form?.reset();
+      if (elements.imagePreviewContainer) {
+        elements.imagePreviewContainer.innerHTML = '';
+      }
+      uploadedImages = [];
+    });
+  } else {
+    console.warn('One or more modal-related elements not found:', {
+      submitAppBtn: !!elements.submitAppBtn,
+      modal: !!elements.modal,
+      closeModal: !!elements.closeModal
+    });
+  }
+</script>
+
+<style>
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes sparkle {
+    0%, 100% {
+      transform: scale(1) rotate(0deg);
+    }
+    50% {
+      transform: scale(1.2) rotate(10deg);
+    }
+  }
+
+  .animate-sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  :root {
+    --color-gold: #ffd700;
+    --color-silver: #c0c0c0;
+    --color-bronze: #a87333;
+  }
+
+  .text-gold {
+    color: var(--color-gold);
+  }
+  .text-silver {
+    color: var(--color-silver);
+  }
+  .text-bronze {
+    color: var(--color-bronze);
+  }
+
+  .border-gold {
+    border-color: var(--color-gold);
+  }
+  .border-silver {
+    border-color: var(--color-silver);
+  }
+  .border-bronze {
+    border-color: var(--color-bronze);
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;            /* Chrome, Safari and Opera */
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1.1);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1.1);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-50%, -20px) scale(0.95);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-fade-out {
+    animation: fadeOut 0.3s ease-out forwards;
+  }
+</style>
